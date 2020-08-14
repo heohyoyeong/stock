@@ -43,7 +43,7 @@
         <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
       </div>
       <!--logo start-->
-      <a href="detail.html" class="logo"><b>DASH<span>IO</span></b></a>
+      <a href="{% url 'stock:detail' %}" class="logo"><b>Stock<span>Search</span></b></a>
       <!--logo end-->
       <div class="nav notify-row" id="top_menu">
         <!--  notification start -->
@@ -286,11 +286,12 @@
         <div class="row">
           <div class="col-lg-9 main-chart">
             <div class="container">
-<h1>Bulletin Board System(BBS)</h1>
+<h1>Search the Stock</h1>
     <div>
         <form action="{% url 'stock:search' %}" method="post">
             {% csrf_token %}
-                    <td>
+            <br>
+
             <h4>  사용자: </h4>
         </td>
             <select name="my_options" class ='selectpicker' style="height: 30px" style="width:80px" >
