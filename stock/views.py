@@ -405,6 +405,8 @@ def search(request):
             a9 = plz("갤럭시아에스엠")
             total = [a1, a2, a3, a4, a5, a6, a7,a8,a9]
             context = {'posts': total}
+    a = request.session['userss']
+    context['userss'] = a
     return render(request,'detail.html',context)
 
 
@@ -481,7 +483,8 @@ def detailpost(request,code_num):
 
     total = [a1, a2, a3, a4, a5, a6, a7, a8]
     context['stock']=total
-
+    a = request.session['userss']
+    context['userss'] = a
     return render(request, 'detailpost.html',context)
 
 # 로그아웃
@@ -491,6 +494,7 @@ def s_logout(request):
 
 # 게시판
 def s_bbs(request):
+
 
     return render(request,'bbs.html')
 
