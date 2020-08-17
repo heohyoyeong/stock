@@ -90,8 +90,8 @@
 
                         <h4>  사용자: </h4>
                     </td>
-                        <select id = "selectBox" select name="selectBox" class ='selectpicker' style="height: 30px" style="width:80px" >
-                            <option value="" selected="selected">전체</option>
+                        <select onchange="categoryChange(this)" select id = "selectBox" select name="selectBox" class ='selectpicker' style="height: 30px" style="width:80px" >
+                            <option value="" selected="selected">그룹을 선택하세요</option>
                             <option value="gs">GS그룹</option>
                             <option value="lg">LG그룹</option>
                             <option value="sk">SK그룹</option>
@@ -125,7 +125,12 @@
                             <option value="hyjung">현대중공업그룹</option>
                             <option value="hyosung">효성그룹</option>
                         </select>
-                        <input type="submit" class="btn btn-theme" value="그룹 선택">
+
+                         <select id = "machingstock" select name="machingstock" class ='selectpicker' style="height: 30px" style="width:80px" >
+                            <option value="" selected="selected">종목을 선택하세요</option>
+                         </select>
+
+                        <input type="submit" class="btn btn-theme" value="Enter">
                     </form>
                 </div>
                  <!--끝    -->

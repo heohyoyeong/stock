@@ -68,7 +68,7 @@ def search(request):
         a = find_corp_num(company)
 
         def load_data(**kwargs):
-            crtfc_key = "1328e55da14347c532fdf330692c4de85083a5a4"
+            crtfc_key = "973b712049bba8d20fc0d58f93531fab399e61c8"
             corp_code = kwargs['corp_code']
 
             if kwargs['request'] == 'company':
@@ -413,7 +413,7 @@ def search(request):
 # 예) 현대모비스 클릭시 나오는 곳
 def detailpost(request,code_num):
     def load_data(**kwargs):
-        crtfc_key = "1328e55da14347c532fdf330692c4de85083a5a4"
+        crtfc_key = "973b712049bba8d20fc0d58f93531fab399e61c8"
         corp_code = kwargs['corp_code']
         url = 'http://opendart.fss.or.kr/api/company.json?crtfc_key={}&corp_code={}'.format(crtfc_key, corp_code)
         r = requests.get(url)
