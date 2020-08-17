@@ -1,9 +1,10 @@
+import xml.etree.ElementTree as et
+
 
 didMakeStockList=False
 didMakeDictionary=False
 group_list = list()
 company_list = list()
-
 csv_maching_dict = dict()
 
 def Get_Stock_list():
@@ -55,4 +56,35 @@ def Get_CSV_Maching_dict():
         didMakeDictionary = True
 
     return csv_maching_dict
+
+
+
+didMakeXmlMachingDict=False
+
+corp_code = list()
+corp_name = list()
+xml_maching_dict = dict()
+
+
+
+def Get_XML_maching_dict():
+
+    global didMakeXmlMachingDict
+
+    if didMakeXmlMachingDict is False:
+
+        tree = et.parse('stock/CORPCODE.xml')
+
+        root = tree.getroot()
+
+
+        for child in root.iter('list'):
+            c_code = (child.findtext('corp_code'))
+            c_name = (child.findtext('corp_name'))
+
+            xml_maching_dict[c_name] = c_code
+
+        didMakeXmlMachingDict = True
+
+    return xml_maching_dict
 

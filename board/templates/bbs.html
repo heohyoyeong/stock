@@ -1,4 +1,5 @@
 {% extends 'base.bbs.html' %}
+
 {% load bootstrap4 %}
 
 {% block container %}
@@ -84,13 +85,13 @@
                     최근 게시글</h2>
                    <!--시작-->
               <div>
-                    <form action="{% url 'stock:search' %}" method="post">
+                    <form action="{% url 'board:bbs_main' %}" method="post">
                         {% csrf_token %}
                         <br>
 
                         <h4>  사용자: </h4>
                     </td>
-                        <select onchange="categoryChange(this)" select id = "selectBox" select name="selectBox" class ='selectpicker' style="height: 30px" style="width:80px" >
+                        <select onchange="categoryChange(this,{{ companydict }})" select id = "selectBox" select name="selectBox" class ='selectpicker' style="height: 30px" style="width:80px" >
                             <option value="" selected="selected">그룹을 선택하세요</option>
                             <option value="gs">GS그룹</option>
                             <option value="lg">LG그룹</option>
@@ -197,6 +198,7 @@
     <!-- /MAIN CONTENT -->
     <!--main content end-->
 
+    <script src="/static/js/bbs.js"></script>
 
 {% endblock %}
 

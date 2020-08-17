@@ -8,14 +8,22 @@ from board import GetStockCode
 
 
 def board_main_list(request):
-    #print(GetStockCode.Get_CSV_Maching_dict())
+    companyNamedict= GetStockCode.Get_CSV_Maching_dict()
     print("bbbbbbb")
+    companyName=request.POST.get('machingstock')
+    if companyName != None:
+        print(companyName)
+        xmldict=GetStockCode.Get_XML_maching_dict()
+        corpcode=xmldict[companyName]
+        print(corpcode)
+
     main_list = Post.objects.all().order_by('-id')
-    context = {'posts': main_list }
+    context = {'posts': main_list,'companydict':companyNamedict }
     return render(request, 'bbs.html', context)
 
 #작업중
 def board_search(request):
+
 
 
 
@@ -359,7 +367,8 @@ def board_search(request):
             context = {'posts': total}
             """
 
-    return render(request,'detail.html')
+    return redirect(request,'bbs.html')
+   # return render(request,'detail.html')
    # return render(request,'detail.html',context)
 
 
