@@ -18,10 +18,12 @@ from django.conf.urls import url
 from django.views.generic.base import TemplateView
 from . import views
 
-
+app_name='board'
 
 urlpatterns = [
-    path('', views.board_main_list, name = 'board_main_list'),
-    path('<int:post_id>', views.board_create, name = 'board_create'),
+    path('', views.board_main_list, name = 'bbs_main'),
+    path('create', views.board_create, name = 'bbs_create'),
+    path('detail/<int:id>', views.board_detail, name = 'bbs_detail'),
+
 
 ]

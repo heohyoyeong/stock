@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +22,8 @@
   <!-- Custom styles for this template -->
   <link href="/static/css/detailstyle.css" rel="stylesheet">
   <link href="/static/css/style-responsive.css" rel="stylesheet">
+  <script src="/static/js/bbs.js"></script>
+
 
   <!-- =======================================================
     Template Name: Dashio
@@ -236,6 +238,7 @@
       </div>
     </header>
     <!--header end-->
+
     <!-- **********************************************************************************************************************************************************
         MAIN SIDEBAR MENU
         *********************************************************************************************************************************************************** -->
@@ -263,148 +266,11 @@
       </div>
     </aside>
     <!--sidebar end-->
-    <!-- **********************************************************************************************************************************************************
-        MAIN CONTENT
-        *********************************************************************************************************************************************************** -->
-    <!--main content start-->
-    <section id="main-content">
-      <section class="wrapper">
-        <!-- page start-->
-        <div class="row mt">
-          <div class="col-sm-3">
-            <section class="panel">
-              <div class="panel-body">
-                <a href="{% url 'board:bbs_create' %}" class="btn btn-compose">
-                  <i class="fa fa-pencil"></i>  글쓰기
-                  </a>
-                <ul class="nav nav-pills nav-stacked mail-nav">
-                  <li class="active"><a href="inbox.html"> <i class="fa fa-inbox"></i> 종목게시판  <span class="label label-theme pull-right inbox-notification"></span></a></li>
-                  <li><a href="#"> <i class="fa fa-file-text-o"></i> 내가 쓴 글  <span class="label label-info pull-right inbox-notification"></span></a></a>
-                  </li>
-                </ul>
-              </div>
-            </section>
-            <section class="panel">
-              <div class="panel-body">
-                <ul class="nav nav-pills nav-stacked labels-info ">
-                  <li>
-                    <h4>접속 중 회원</h4>
-                  </li>
-                  <li>
-                    <a href="#">
-                        <img src="/static/img/friends/fr-10.jpg" class="img-circle" width="20">김선생
-
-                      </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                        <img src="/static/img/friends/fr-05.jpg" class="img-circle" width="20">동학개미
-
-                      </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                        <img src="/static/img/friends/fr-01.jpg" class="img-circle" width="20">떡상가즈아
-
-                      </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                        <img src="/static/img/friends/fr-03.jpg" class="img-circle" width="20">내일의버핏
-
-                      </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                        <img src="/static/img/friends/fr-02.jpg" class="img-circle" width="20">존버가답
-
-                      </a>
-                  </li>
-                </ul>
-
-                <div class="inbox-body text-center inbox-action">
-                  <div class="btn-group">
-                    <a class="btn mini btn-default" href="javascript:;">
-                      <i class="fa fa-power-off"></i>
-                      </a>
-                  </div>
-                  <div class="btn-group">
-                    <a class="btn mini btn-default" href="javascript:;">
-                      <i class="fa fa-cog"></i>
-                      </a>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-          <div class="col-sm-9">
-            <section class="panel">
-              <header class="panel-heading wht-bg">
-                <h2 class="gen-case">
-                    최근 게시글</h2>
-              </header>
-              <div class="panel-body minimal">
-                <div class="mail-option">
-
-                    </div>
-                  </div>
-                  <div class="btn-group">
-
-                      <br>
-                      </a>
-                  </div>
-                  <div class="btn-group hidden-phone">
-
-                    <ul class="dropdown-menu">
-                      <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
-                      <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>
-                      <li class="divider"></li>
-                      <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-                    </ul>
-                  </div>
-                  <div class="btn-group">
-                    <a data-toggle="dropdown" href="#" class="btn mini blue">
 
 
-                      </a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
-                      <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>
-                      <li class="divider"></li>
-                      <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-                    </ul>
-                  </div>
-                  <ul class="unstyled inbox-pagination">
-                    <li><span>1-50 of 99</span></li>
-                    <li>
-                      <a class="np-btn" href="#"><i class="fa fa-angle-left  pagination-left"></i></a>
-                    </li>
-                    <li>
-                      <a class="np-btn" href="#"><i class="fa fa-angle-right pagination-right"></i></a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="table-inbox-wrap ">
-                  <table class="table table-inbox table-hover">
-                    <tbody>
-                      <tr class="unread">
 
-
-                   {% block container %}
-                   {% endblock %}
-
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </section>
-          </div>
-        </div>
-      </section>
-      <!-- /wrapper -->
-    </section>
-    <!-- /MAIN CONTENT -->
-    <!--main content end-->
+      {% block container %}
+      {% endblock %}
     <!--footer start-->
     <footer class="site-footer">
       <div class="text-center">
