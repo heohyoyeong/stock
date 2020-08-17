@@ -50,11 +50,11 @@ def board_create(request):
             print('폼이상')
             if match_code !='':
                 print(post_form)
-                post_form.fields['maching_code'].value=match_code
-                print(post_form.fields['maching_code'].value)
-                print('match code set')
-                print(post_form)
-            post_form.save()
+                # commit=False : db에 넣지말고 객체를 가져와라->post에 넣어줌
+                post=post_form.save(commit=False)
+                post.maching_code=match_code
+                post.save()
+            #post_form.save()
             return redirect('board:bbs_main')
 
     else:
