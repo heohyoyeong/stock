@@ -456,7 +456,8 @@ def detailpost(request,code_num):
 
 
     def detail_stock(z):
-        date= alldate[z].get_text()
+        date = alldate[z].get_text()
+        date_chart = (str(date)).replace(".","-")+"T00:00:00"
         now = allnum[z*6].get_text()
         nows = re.sub('[,]', '', now).strip()
         yester = allnum[z*6+6].get_text()
@@ -468,7 +469,7 @@ def detailpost(request,code_num):
         goga = allnum[z * 6 + 3].get_text()
         juga = allnum[z * 6 + 4].get_text()
         gurae = allnum[z * 6 + 5].get_text()
-        context = {'date': date, 'nows': nows, 'per': per, 'differ': differ,
+        context = {'date': date, "date_chart" : date_chart, 'nows': nows, 'per': per, 'differ': differ,
                    'siga': siga, "goga": goga, 'juga': juga, 'gurae':gurae}
         return context
 
