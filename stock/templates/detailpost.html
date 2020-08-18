@@ -432,29 +432,7 @@
         }],
         "type": "line-dotted",
         "yScale": "linear"
-      }, {
-        "xScale": "ordinal",
-        "comp": [],
-        "main": [{
-          "className": ".main.l1",
-          "data": [
-              {% for post in stock %}
-                  {"y": {{ post.nows }},
-            "x": "{{ post.date_chart }}"},
-              {% endfor %}
-          ]
-        }, {
-          "className": ".main.l2",
-          "data": [
-              {% for post in stock %}
-                  {"y": {{ post.nows }},
-            "x": "{{ post.date_chart }}"},
-              {% endfor %}
-          ]
-        }],
-        "type": "cumulative",
-        "yScale": "linear"
-      }, {
+      },  {
         "xScale": "ordinal",
         "comp": [],
         "main": [{
@@ -479,7 +457,7 @@
       }];
       var order = [0, 1, 0, 2],
         i = 0,
-        xFormat = d3.time.format('%A'),
+        xFormat = d3.time.format('%x'),
         chart = new xChart('line-dotted', data[order[i]], '#chart', {
           axisPaddingTop: 5,
           dataFormatX: function(x) {
