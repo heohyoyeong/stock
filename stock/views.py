@@ -401,7 +401,7 @@ def search(request):
             a5 = plz("효성화학")
             a6 = plz("진흥기업") #이상한거있음
             a7 = plz("효성 ITX")
-            a8 = plz("신화인터텍")
+            a8 = plz("신인터텍")
             a9 = plz("갤럭시아에스엠")
             total = [a1, a2, a3, a4, a5, a6, a7,a8,a9]
             context = {'posts': total}
@@ -508,5 +508,9 @@ def s_profile(request):
 def s_bbs_create(request):
 
     return render(request,'bbs_create.html')
+
+def s_calendar(request):
+
+    return  render(request,'calendar.html')
 
 
