@@ -50,7 +50,11 @@ def s_signup(request):
 
 # 메인페이지
 def s_detail(request):
-    return render(request,'detail.html')
+
+
+    userss = request.session['userss']
+    context = {'userss': userss}
+    return render(request, 'detail.html', context)
 
 
 # select창을 누르고 검색을 누르면 발동
