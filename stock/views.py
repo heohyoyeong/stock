@@ -491,7 +491,9 @@ def detailpost(request,code_num):
 # 로그아웃
 def s_logout(request):
 
-    request.session.clear()
+    request.session["username"] = "";
+    request.session.clear();
+    request.session.abandon();
     return redirect('stock:detail')
 
 # 게시판
