@@ -12,3 +12,13 @@ class User(models.Model):
 
     class Meta:
         db_table = 'test_user'
+
+
+class stockname(models.Model):
+    stock_text=models.ForeignKey(User,on_delete=models.CASCADE)
+    stock_name = models.CharField(max_length=30)
+    stock_code = models.IntegerField()
+    stock_money = models.IntegerField()
+
+    def __str__(self):
+        return self.stock_name

@@ -303,6 +303,10 @@
           <div class="col-lg-9 main-chart">
             <div class="container">
 <h1>Bulletin Board System(BBS)</h1>
+                <form action="{% url 'stock:mysiteadd' code_num %}" method="get">
+                    {% csrf_token %}
+                   <input type="submit" class="btn btn-warning" value="관심종목추가">
+                </form>
     <div class="m-1"></div>
 
     <table class="table table-hover">
