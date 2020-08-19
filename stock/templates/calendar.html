@@ -243,7 +243,7 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="profile.html"><img src="/static/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
+          <p class="centered"><a href="{% url 'stock:profile' %}"><img src="/static/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
           <h5 class="centered"> 뀨's </h5>
           <li class="mt">
             <a href="{% url 'stock:detail' %}">
@@ -266,7 +266,7 @@
     <!--main content start-->
     <section id="main-content">
       <section class="wrapper">
-        <h3><i class="fa fa-angle-right"></i> Calendar</h3>
+        <h3><i class="fa fa-angle-right"></i>Stock Calendar</h3>
         <!-- page start-->
         <div class="row mt">
           <aside class="col-lg-3 mt">
@@ -315,7 +315,7 @@
           -->
           Created with Dashio template by <a href="https://templatemag.com/">TemplateMag</a>
         </div>
-        <a href="calendar.html#" class="go-top">
+        <a href="{% url 'stock:calendar' %}" class="go-top">
           <i class="fa fa-angle-up"></i>
           </a>
       </div>

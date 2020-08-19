@@ -11,6 +11,7 @@ urlpatterns = [
     path('profile/', views.s_profile, name='profile'), # 프로
     path('logout/', views.s_login, name='logout'), # 로그아웃
     path('calendar/',views.s_calendar, name='calendar'), # 캘린더
+    path('profile/',views.s_profile, name='profile'),
     # path('bbs/', views.s_bbs, name='bbs'), # 게시판
     # path('bbs_create',views.s_bbs_create, name='bbs_create'), #게시판 글작성
 

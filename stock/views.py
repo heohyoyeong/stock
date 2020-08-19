@@ -490,6 +490,7 @@ def detailpost(request,code_num):
 
 # 로그아웃
 def s_logout(request):
+
     request.session.clear()
     return redirect('stock:detail')
 
