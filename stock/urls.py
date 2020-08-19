@@ -14,8 +14,10 @@ urlpatterns = [
     path('profile/',views.s_profile, name='profile'),
     # path('bbs/', views.s_bbs, name='bbs'), # 게시판
     # path('bbs_create',views.s_bbs_create, name='bbs_create'), #게시판 글작성
-
+    path('<str:user_id>/mysite/', views.mysite, name='mysite'),
+    path('<str:code_num>/mysiteadd/', views.mysiteadd, name='mysiteadd'),
     path('search/', views.search, name='search'), #select 선택시 계열사 뜸
-    path('<str:code_num>/detailpost/', views.detailpost, name='detailpost')
+    path('<str:code_num>/detailpost/', views.detailpost, name='detailpost'),
+    path('<str:user_id>/mysitesend/', views.mysitesend, name='mysitesend'),
 ]
 

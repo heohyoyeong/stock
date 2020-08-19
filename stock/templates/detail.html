@@ -247,7 +247,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
           <p class="centered"><a href="{% url 'stock:profile' %}"><img src="/static/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
-          <h5 class="centered">{{ userss }}</h5>
+          <h5 class="centered">{{userss}}</h5>
           <li class="mt">
             <a class="active" href="{% url 'stock:detail' %}">
               <i class="fa fa-dashboard"></i>
@@ -268,8 +268,16 @@
               <span class="label label-theme pull-right mail-info"></span>
             </a>
           </li>
+          <li class="sub-menu">
+            <a href={% url 'stock:mysite' user_id %}>
+              <i class="fa fa-desktop"></i>
+              <span> My Stock </span>
+              <span class="label label-theme pull-right mail-info"></span>
+            </a>
+          </li>
         </ul>
         <!-- sidebar menu end-->
+
       </div>
     </aside>
     <!--sidebar end-->
@@ -284,11 +292,10 @@
             <div class="container">
 <h1>Search the Stock</h1>
     <div>
+
         <form action="{% url 'stock:search' %}" method="post">
             {% csrf_token %}
-            <br>
 
-            <h4>  사용자: </h4>
         </td>
             <select name="my_options" class ='selectpicker' style="height: 30px" style="width:80px" >
 			    <option value="gs">GS그룹</option>

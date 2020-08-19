@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect
-from .models import User
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import User, stockname
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password, check_password
 import xml.etree.ElementTree as ET
@@ -9,6 +8,8 @@ from urllib.parse import quote
 import pandas as pd
 import re
 from bs4 import BeautifulSoup
+from stock.forms import stocknameForm
+import time, win32con, win32api, win32gui
 
 # 로그인
 def s_login(request):
@@ -29,7 +30,9 @@ def s_login(request):
 
             if (login_password == myuser.password):
                 request.session['userss'] = login_username
+                request.session['user_id'] = myuser.id
                 context = {'userss': login_username}
+                context['user_id'] = myuser.id
                 return render(request, 'detail.html', context)  # 나중에 홈피로 연결시켜야함
             else:
                 response_data['error'] = "비밀번호를 틀렸습니다."
@@ -50,11 +53,12 @@ def s_signup(request):
 
 # 메인페이지
 def s_detail(request):
-
-
-    userss = request.session['userss']
-    context = {'userss': userss}
-    return render(request, 'detail.html', context)
+    a = request.session['userss']
+    aldd_id = request.session['user_id']
+    context={}
+    context['userss'] = a
+    context['user_id'] = aldd_id
+    return render(request,'detail.html',context)
 
 
 # select창을 누르고 검색을 누르면 발동
@@ -410,6 +414,8 @@ def search(request):
             total = [a1, a2, a3, a4, a5, a6, a7,a8,a9]
             context = {'posts': total}
     a = request.session['userss']
+    aldd_id = request.session['user_id']
+    context['user_id'] = aldd_id
     context['userss'] = a
     return render(request,'detail.html',context)
 
@@ -489,7 +495,10 @@ def detailpost(request,code_num):
     total = [a1, a2, a3, a4, a5, a6, a7, a8]
     context['stock']=total
     a = request.session['userss']
+    aldd_id=request.session['user_id']
     context['userss'] = a
+    context['user_id']=aldd_id
+    context['code_num']=code_num
     return render(request, 'detailpost.html',context)
 
 # 로그아웃
@@ -520,4 +529,148 @@ def s_calendar(request):
 
     return  render(request,'calendar.html')
 
+
+def mysite(request,user_id):
+    aldd = request.session['userss']
+    aldd_id = request.session['user_id']
+    user = get_object_or_404(User, pk=user_id)
+    mysite_code = user.stockname_set.all()
+
+
+    def nows(stockcode):
+        url = f'http://finance.naver.com/item/sise_day.nhn?code={stockcode}'
+        res = requests.get(url)
+        soup = BeautifulSoup(res.text, 'lxml')
+        allnum = soup.find_all("td", attrs={"class": "num"})
+        now = allnum[0].get_text()
+        nows = re.sub('[,]', '', now).strip()
+        nowsint=int(nows)
+        return nowsint
+
+    lens=len(mysite_code)
+    for z in range(0,lens):
+        k = int(mysite_code[z].stock_code)
+        kk = ('%06d' % k)
+        a=nows(kk)
+        mysite_code[z].money=a
+
+    context = {'user_name': aldd, 'user_id': aldd_id}
+    context['stock']=mysite_code
+    return render(request, 'mysite.html', context)
+
+
+def mysitesend(request,user_id):
+    aldd = request.session['userss']
+    aldd_id = request.session['user_id']
+    user = get_object_or_404(User, pk=user_id)
+    mysite_code = user.stockname_set.all()
+
+
+    def nows(stockcode):
+        url = f'http://finance.naver.com/item/sise_day.nhn?code={stockcode}'
+        res = requests.get(url)
+        soup = BeautifulSoup(res.text, 'lxml')
+        allnum = soup.find_all("td", attrs={"class": "num"})
+        now = allnum[0].get_text()
+        nows = re.sub('[,]', '', now).strip()
+        nowsint=int(nows)
+        return nowsint
+
+    lens=len(mysite_code)
+    for z in range(0,lens):
+        k = int(mysite_code[z].stock_code)
+        kk = ('%06d' % k)
+        a=nows(kk)
+        mysite_code[z].money=a
+    kakao_opentalk_name = aldd
+
+    # # 채팅방에 메시지 전송
+    def kakao_sendtext(chatroom_name, text):
+        # # 핸들 _ 채팅방
+        hwndMain = win32gui.FindWindow(None, chatroom_name)
+        hwndEdit = win32gui.FindWindowEx(hwndMain, None, "RichEdit50W", None)
+        # hwndListControl = win32gui.FindWindowEx( hwndMain, None, "EVA_VH_ListControl_Dblclk", None)
+
+        win32api.SendMessage(hwndEdit, win32con.WM_SETTEXT, 0, text)
+        SendReturn(hwndEdit)
+
+    # # 엔터
+    def SendReturn(hwnd):
+        win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, win32con.VK_RETURN, 0)
+        time.sleep(0.01)
+        win32api.PostMessage(hwnd, win32con.WM_KEYUP, win32con.VK_RETURN, 0)
+
+    # # 채팅방 열기
+    def open_chatroom(chatroom_name):
+        # # 친구목록 검색하는 Edit (채팅방이 열려있지 않아도 전송 가능하기 위하여)
+        hwndkakao = win32gui.FindWindow(None, "카카오톡")
+        hwndkakao_edit1 = win32gui.FindWindowEx(hwndkakao, None, "EVA_ChildWindow", None)
+        hwndkakao_edit2_1 = win32gui.FindWindowEx(hwndkakao_edit1, None, "EVA_Window", None)
+        hwndkakao_edit3 = win32gui.FindWindowEx(hwndkakao_edit2_1, None, "Edit", None)
+
+        # # Edit에 검색 _ 입력되어있는 텍스트가 있어도 덮어쓰기됨
+        win32api.SendMessage(hwndkakao_edit3, win32con.WM_SETTEXT, 0, kakao_opentalk_name)
+        time.sleep(1)  # 안정성 위해 필요
+        SendReturn(hwndkakao_edit3)
+
+    def kakao():
+        a= []
+        for x in range(0, lens):
+            if mysite_code[x].money >= mysite_code[x].stock_money:
+                atd=str(mysite_code[x].stock_money)
+                a.append("목표로 설정하신 " +mysite_code[x].stock_name+"이 목표금액 "+atd+"을 달성되었습니다.")
+        else:
+            pass
+        s = "\n".join(a)
+        return s
+
+
+
+    def main():
+        open_chatroom(kakao_opentalk_name)  # 채팅방 열기
+
+        text = kakao()
+        kakao_sendtext(kakao_opentalk_name, text)  # 메시지 전송
+
+    main()
+
+
+    context = {'user_name': aldd, 'user_id': aldd_id}
+    context['stock']=mysite_code
+    return render(request, 'mysite.html', context)
+
+
+def mysiteadd(request,code_num):
+
+    aldd=request.session['userss']
+    aldd_id=request.session['user_id']
+    context={'user_name':aldd,'user_id':aldd_id}
+    def load_data(**kwargs):
+        crtfc_key = "1328e55da14347c532fdf330692c4de85083a5a4"
+        corp_code = kwargs['corp_code']
+        url = 'http://opendart.fss.or.kr/api/company.json?crtfc_key={}&corp_code={}'.format(crtfc_key, corp_code)
+        r = requests.get(url)
+        company_data = r.json()
+        return company_data
+    b = load_data(corp_code=code_num)
+    stock_name = b['stock_name']
+    stock_code = b['stock_code']
+
+    if request.method == 'POST':
+        post = User.objects.get(pk=aldd_id)
+        stock_text= stockname(stock_text=post)
+        datt_form=stocknameForm(request.POST,instance=stock_text)# POST방식으로 전송된것을 싹다 사용해서 객체로 만들어라!
+        if datt_form.is_valid(): # 제대로 된 값을 입력하였다면
+            obj = datt_form.save(commit=False)
+            obj.stock_code=stock_code
+            obj.stock_name=stock_name
+            obj.save()
+
+            return render(request, 'detail.html', context) #다시 돌아간다!
+
+    # GET 방식으로 호출될때 => form action을 사용하지않는 거의 모든 방식
+    else:
+        datt_form=stocknameForm() #PostForm의 인자가 ()처럼 비어있기 때문에 비어있는 형태로 출력된다.
+
+        return render(request, 'mysiteadd.html',{'datt_form':datt_form})
 
