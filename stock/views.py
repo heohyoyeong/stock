@@ -247,9 +247,8 @@ def search(request):
             a3 = plz("신세계인터내셔날")
             a4 = plz("신세계푸드")
             a5 = plz("신세계건설")
-            a6 = plz("신세계I&C")
             a7 = plz("광주신세계")
-            total = [a1, a2, a3, a4, a5, a6, a7]
+            total = [a1, a2, a3, a4, a5, a7]
             context = {'posts': total}
         elif selected_option == 'cj':
             a1 = plz("CJ")
@@ -409,7 +408,7 @@ def search(request):
             a5 = plz("효성화학")
             a6 = plz("진흥기업") #이상한거있음
             a7 = plz("효성 ITX")
-            a8 = plz("신인터텍")
+            a8 = plz("신화인터텍")
             a9 = plz("갤럭시아에스엠")
             total = [a1, a2, a3, a4, a5, a6, a7,a8,a9]
             context = {'posts': total}

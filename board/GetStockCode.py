@@ -73,7 +73,7 @@ def Get_XML_maching_dict():
 
     if didMakeXmlMachingDict is False:
 
-        tree = et.parse('stock/CORPCODE.xml')
+        tree = et.parse('stock/CORPCODE2.xml')
 
         root = tree.getroot()
 
