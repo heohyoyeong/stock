@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from board.models import Post
+from board.models import Post, Comment
 from board.forms import PostForm,CommentForm
 import xml.etree.ElementTree as ET
 import requests
@@ -147,13 +147,63 @@ def board_detail(request, post_id):
 
 
 
+def board_send_comment(request, post_id):
+    print("Comment 들어왔다")
+    post = get_object_or_404(Post, pk=post_id)
+    comment = Comment(comment=post)
+
+    if request.method == "POST":
+        print("post 들어왔다 ")
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            # comment = form.save(commit=False)
+            # comment.post = post
+            comment.save()
+            print("comment pk: {}".format(comment.pk))
+            return redirect(request, 'board:bbs_detail', post_id=post_id)
+
+            # return redirect("/stock/bbs/" + str(post_id) + '/detail')
+    else:
+        form = CommentForm(request.GET)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect(request,'board:bbs_detail', post_id=post_id)
+
+    print("pComment 그린다 ")
+    return redirect(request,'board:bbs_detail', post_id=post_id)
 
 
 
-# def stock_board(request, company_code):
-#     main_list = Post.objects.get(company_code).order_by('-id')
-#     context = {'posts': main_list}
-#     return render(request, 'bbs.html', context)
+def board_update(request, post_id):
+
+    post = get_object_or_404(Post, pk=post_id)
+
+    if request.method == 'POST':
+        post_form = PostForm(request.POST, instance=post)
+
+        if post_form.is_valid(): # 입력한 데이터에 문제가 없다면
+            post_form.save() # 포스트 폼에 저장한다
+            return redirect('board:bbs_detail', post_id=post_id)
+            # 네임스페이스가 posts이고 urlpattern에서 name이 list인
+            # url로 리다이렉션
+
+    else:
+        post_form = PostForm(instance=post)
+        # 수정 시 빈 칸이 아니라 instance에 post 데이터를 가져오는 칸을 만들어줌
+
+    return render(request, 'bbs_create.html', {'post_form': post_form})
+
+
+
+def board_delete(request, post_id):
+    post = Post.objects.get(id=post_id) # id가 인자로 넘어온 id와 일치한 객체만 post에 넘겨줌
+    post.delete()
+
+    return redirect('board:bbs_main')
+
+
 
 
 

@@ -24,6 +24,9 @@ urlpatterns = [
     path('', views.board_main_list, name='bbs_main'),
     path('create', views.board_create, name='bbs_create'),
     path('<int:post_id>/detail', views.board_detail, name='bbs_detail'),
+    path('<int:post_id>/detail/send_comment', views.board_send_comment, name='bbs_send_comment'),
+    path('<int:post_id>/update', views.board_update, name='bbs_update'),
+    path('<int:post_id>/delete', views.board_delete, name='bbs_delete'),
 
 
 ]

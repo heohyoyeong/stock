@@ -132,15 +132,31 @@
 
                 <div class="view-mail" >
                     {{ post.contents }}
-                </div>
-                <div class="attachment-mail">
 
+
+                    <a href="{% url 'board:bbs_update' post.id %}">수정</a>
+                    <a href="{% url 'board:bbs_delete' post.id %}">삭제</a>
+
+
+                </div>
+
+
+                <div class="attachment-mail">
+                    <form action="{% url 'board:bbs_send_comment' post.id %}" method="POST">
                     {% csrf_token %}
                     {% bootstrap_form comment_form %}
 
                     <input type="submit" class="btn btn-theme" value="댓글작성">
-
+                    </form>
                   <ul>
+                    <table class="table table-hover">
+                      <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">작성자</th>
+                                    <th scope="col">내용</th>
+                                    <th scope="col">게시일</th>
+                                </tr>
+                      </thead>
                       <tbody>
                               {% for comment in post.comments.all %}
                                 <tr>
@@ -150,7 +166,8 @@
                                 </tr>
                               {% endfor %}
                       </tbody>
-                  </ul>
+                    </table>
+                   </ul>
                 </div>
 
 
