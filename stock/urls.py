@@ -18,6 +18,5 @@ urlpatterns = [
     path('<str:code_num>/mysiteadd/', views.mysiteadd, name='mysiteadd'),
     path('search/', views.search, name='search'), #select 선택시 계열사 뜸
     path('<str:code_num>/detailpost/', views.detailpost, name='detailpost'),
-    path('<str:user_id>/mysitesend/', views.mysitesend, name='mysitesend'),
 ]
 

@@ -22,3 +22,14 @@ class stockname(models.Model):
 
     def __str__(self):
         return self.stock_name
+
+
+class stockhistory(models.Model):
+    history_text=models.ForeignKey(User,on_delete=models.CASCADE)
+    history_name = models.CharField(max_length=30)
+    history_code = models.IntegerField()
+    history_money = models.IntegerField()
+    history_date=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.history_name

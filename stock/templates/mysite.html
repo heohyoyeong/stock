@@ -7,6 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="Dashboard">
   <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <meta http-equiv="refresh" content="30">
   <title>Dashio - Bootstrap Admin Template</title>
 
   <!-- Favicons -->
@@ -280,8 +281,6 @@
                 <h6>Main Administrator</h6>
                 <p> 안녕하세요 . 저는 멀티캠퍼스에 다니고 있는 김규영 입니다. 잘 부탁드려요 . 돈 많이 벌고 싶어요 .. 돈 짱짱 </p>
                 <br>
-                <p><a href="{% url 'stock:mysitesend' user_id %}" class="btn btn-theme02"><i class="fa fa-envelope"></i> Send a KaKaoTalk</a></p>
-
               </div>
               <!-- /col-md-4 -->
               <div class="col-md-4 centered">
@@ -361,21 +360,29 @@
                       <div class="col-md-6 detailed">
                         <h4>User Stats</h4>
                         <div class="row centered mt mb">
+                            {% for post in stock %}
                           <div class="col-sm-4">
                             <h1><i class="fa fa-money"></i></h1>
-                            <h3>$22,980</h3>
-                            <h6>LIFETIME EARNINGS</h6>
+                            <h3>{{ post.money }}</h3>
+                            <h6>{{ post.stock_name }}</h6>
                           </div>
                           <div class="col-sm-4">
                             <h1><i class="fa fa-trophy"></i></h1>
-                            <h3>37</h3>
-                            <h6>COMPLETED TASKS</h6>
+                            <h3>
+                                {% if post.money >= post.stock_money %}
+                                                Success
+                                                {% else %}
+                                                Fail
+                                            {% endif %}
+                            </h3>
+                            <h6>달성 여부</h6>
                           </div>
                           <div class="col-sm-4">
-                            <h1><i class="fa fa-shopping-cart"></i></h1>
-                            <h3>1980</h3>
-                            <h6>ITEMS SOLD</h6>
+                            <h1><i class="fa fa-bitcoin"></i></h1>
+                            <h3>{{ post.stock_money }}</h3>
+                            <h6>목표</h6>
                           </div>
+                            {% endfor %}
                         </div>
                         <!-- /row -->
                         <h4>My Friends</h4>
@@ -428,24 +435,26 @@
                     <div class="row">
                       <!-- /col-md-6 -->
                       <div class="col-md-6 detailed">
-                        <h4>Location</h4>
-                        <div class="col-md-8 col-md-offset-2 mt">
-                          <p>
-                            Postal Address<br/> Seoul Donghoro 11 ra gil 12<br/> 201
-                          </p>
-                          <br>
+                       <table class="table table-hover" style="font-max-size: large">
+                                    <thead class="thead-dark"> <!-- 제목 -->
+                                        <tr>
+                                            <th scope="col">회사명</th>
+                                            <th scope="col">현재가</th>
+                                            <th scope="col">목표가</th>
+                                            <th scope="col">설정날짜</th>
+                                        </tr>
+                                    </thead>
+                                        {% for post in history %}
+                                        <tr>
+                                            <td>{{ post.history_name }}</td>
+                                            <td>{{ post.money }}</td>
+                                            <td>{{ post.history_money }}</td>
+                                            <td>{{ post.history_date }}</td>
 
-                        </div>
-                        <h4>Contacts</h4>
-                        <div class="col-md-8 col-md-offset-2 mt">
-                          <p>
-                            Phone: 010 - 2492 - 1231<br/>
-                          </p>
-                          <br>
-                          <p>
-                            Email: kykom94@naver.com.com<br/> Skype: UseDashio<br/> Website: http://Alvarez.is
-                          </p>
-                        </div>
+
+                                        </tr>
+                                    {% endfor %}
+                                </table>
                       </div>
                       <!-- /col-md-6 -->
                     </div>
