@@ -19,7 +19,9 @@
                   <i class="fa fa-pencil"></i>  글쓰기
                   </a>
                 <ul class="nav nav-pills nav-stacked mail-nav">
-                  <li class="active"><a href="inbox.html"> <i class="fa fa-inbox"></i> 종목게시판  <span class="label label-theme pull-right inbox-notification"></span></a></li>
+                  <li class="active"><a href="{% url 'board:bbs_main' %}"> <i class="fa fa-inbox"></i> 게시판  <span class="label label-theme pull-right inbox-notification"></span></a></li>
+{#                  <li class="active"><a href="{% url 'board:bbs_search' posts.maching_code %}"> <i class="fa fa-inbox"></i> 종목별게시판  <span class="label label-theme pull-right inbox-notification"></span></a></li>#}
+
                   <li><a href="#"> <i class="fa fa-file-text-o"></i> 내가 쓴 글  <span class="label label-info pull-right inbox-notification"></span></a></a>
                   </li>
                 </ul>
@@ -82,16 +84,25 @@
             <section class="panel">
               <header class="panel-heading wht-bg">
                 <h2 class="gen-case">
-                    최근 게시글</h2>
+
+                    {{ ChoicCodeName }} 게시글</h2>
                    <!--시작-->
+
               <div>
+
+
+
+
                     <form action="{% url 'board:bbs_main' %}" method="post">
                         {% csrf_token %}
+
+                        <br>
                         <br>
 
-                        <h4>  사용자: </h4>
-                    </td>
+                    <td></td>
                         <select onchange="categoryChange(this,{{ companydict }})" select id = "selectBox" select name="selectBox" class ='selectpicker' style="height: 30px" style="width:80px" >
+
+
                             <option value="" selected="selected">그룹을 선택하세요</option>
                             <option value="gs">GS그룹</option>
                             <option value="lg">LG그룹</option>
@@ -128,7 +139,21 @@
                         </select>
 
                          <select id = "machingstock" select name="machingstock" class ='selectpicker' style="height: 30px" style="width:80px" >
-                            <option value="" selected="selected">종목을 선택하세요</option>
+{#                             <option value="" selected="selected">종목을 선택하세요</option>#}
+
+
+             <!-- 랜더링해도 원래 선택했던 셀렉트바가 보일 수 있도록 세팅 시작   -->
+
+{#                             {% if companyName  %}#}
+{##}
+{#                             <option value="" selected="selected">{{ companyName }}</option>#}
+{#                            {% else %}#}
+{#                             <option value="" selected="selected">종목을 선택하세요</option>#}
+{##}
+{#                            {% endif %}#}
+
+             <!-- 랜더링해도 원래 선택했던 셀렉트바가 보일 수 있도록 세팅 끝   -->
+
                          </select>
 
                         <input type="submit" class="btn btn-theme" value="Enter">
@@ -167,29 +192,57 @@
                       <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
                     </ul>
                   </div>
-                  <ul class="unstyled inbox-pagination">
-                    <li><span>1-50 of 99</span></li>
-                    <li>
-                      <a class="np-btn" href="#"><i class="fa fa-angle-left  pagination-left"></i></a>
-                    </li>
-                    <li>
-                      <a class="np-btn" href="#"><i class="fa fa-angle-right pagination-right"></i></a>
-                    </li>
-                  </ul>
-                </div>
+{#                  <ul class="unstyled inbox-pagination">#}
+{#                    <li><span>1-50 of 99</span></li>#}
+{#                    <li>#}
+{#                      <a class="np-btn" href="#"><i class="fa fa-angle-left  pagination-left"></i></a>#}
+{#                    </li>#}
+{#                    <li>#}
+{#                      <a class="np-btn" href="#"><i class="fa fa-angle-right pagination-right"></i></a>#}
+{#                    </li>#}
+{#                  </ul>#}
+{#                </div>#}
+
+             <div class="panel-body">
                 <div class="table-inbox-wrap ">
-                  <table class="table table-inbox table-hover">
-                    <tbody>
+
+                    <table class="table table-inbox table-hover">
+                        <tbody>
                       <tr class="unread">
 
+                          <table class="table table-hover">
 
+                            <thead class="thead-dark"> <!-- 제목 -->
+                                <tr>
+                                    <th scope="col">제목 </th>
+                                    <th scope="col">작성자 </th>
+                                    <th scope="col">작성일 </th>
 
+                                </tr>
+                            </thead>
+                                {% for post in posts %}
+
+                                <tr>
+                                    <td><a href="{% url 'board:bbs_detail' post.id %}">{{ post.title }}</a></td>
+                                    <td>{{ post.author }}</td>
+                                    <td>{{ post.pub_date }}%</td>
+                                </tr>
+
+                                {% endfor %}
+
+                        </table>
 
                     </tbody>
                   </table>
+
                 </div>
               </div>
+
+
+            </div>
+
             </section>
+
           </div>
         </div>
       </section>

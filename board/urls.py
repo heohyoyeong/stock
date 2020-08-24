@@ -21,9 +21,9 @@ from . import views
 app_name='board'
 
 urlpatterns = [
-    path('', views.board_main_list, name = 'bbs_main'),
-    path('create', views.board_create, name = 'bbs_create'),
-    path('detail/<int:id>', views.board_detail, name = 'bbs_detail'),
+    path('', views.board_main_list, name='bbs_main'),
+    path('create', views.board_create, name='bbs_create'),
+    path('<int:post_id>/detail', views.board_detail, name='bbs_detail'),
 
 
 ]

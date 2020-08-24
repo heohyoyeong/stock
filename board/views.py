@@ -6,21 +6,84 @@ import requests
 from board import GetStockCode
 
 
+#### 원본  ####
+# def board_main_list(request):
+#     companyNamedict= GetStockCode.Get_CSV_Maching_dict()
+#     print("bbbbbbb")
+#     companyName=request.POST.get('machingstock')
+#
+#     # 종목 서치
+#     if companyName != None:
+#         print(companyName)
+#         xmldict=GetStockCode.Get_XML_maching_dict()
+#         corpcode=xmldict[companyName]
+#         print(corpcode)
+#
+#     main_list = Post.objects.all().order_by('-id')
+#     context = {'posts': main_list,'companydict':companyNamedict }
+#
+#
+#     return render(request, 'bbs.html', context)
 
+
+
+#### 수정 테스트 1 ####
 def board_main_list(request):
     companyNamedict= GetStockCode.Get_CSV_Maching_dict()
     print("bbbbbbb")
     companyName=request.POST.get('machingstock')
+
+    # 종목 서치할 수 있게
     if companyName != None:
         print(companyName)
         xmldict=GetStockCode.Get_XML_maching_dict()
         corpcode=xmldict[companyName]
         print(corpcode)
 
-    main_list = Post.objects.all().order_by('-id')
-    context = {'posts': main_list,'companydict':companyNamedict }
+        choice_list = Post.objects.filter(maching_code__contains=corpcode).order_by('-id')
+        context = {'posts': choice_list,'companydict':companyNamedict,'corpcode': corpcode, 'ChoicCodeName':companyName }
+
+    else:
+        print('선택한 종목이 없습니다')
+        main_list = Post.objects.all().order_by('-id')
+        context = {'posts': main_list,'companydict':companyNamedict }
+
     return render(request, 'bbs.html', context)
 
+
+
+
+
+#### 수정 테스트 2 ####
+# def board_main_list(request):
+#
+#     context = {}
+#
+#     companyNamedict= GetStockCode.Get_CSV_Maching_dict()
+#     print("bbbbbbb")
+#     companyName=request.POST.get('machingstock')
+#
+#     # 종목 서치할 수 있게
+#     if companyName != None:
+#         print(companyName)
+#         xmldict=GetStockCode.Get_XML_maching_dict()
+#         corpcode=xmldict[companyName]
+#         print(corpcode)
+#
+#         choice_list = Post.objects.filter(maching_code__contains=corpcode).order_by('-id')
+#         context = {'posts': choice_list,'companydict':companyNamedict,'corpcode': corpcode, 'ChoicCodeName':companyName }
+#
+#     elif corpcode != xmldict[companyName]:
+#         print('선택한 종목이 없습니다')
+#         main_list = Post.objects.all().order_by('-id')
+#         context = {'posts': main_list,'companydict':companyNamedict }
+#
+#     else:
+#         print('선택한 종목이 없습니다')
+#         main_list = Post.objects.all().order_by('-id')
+#         context = {'posts': main_list,'companydict':companyNamedict }
+#
+#     return render(request, 'bbs.html', context)
 
 
 # def board_search_stock_list(request,):
@@ -64,7 +127,7 @@ def board_create(request):
     return render(request, 'bbs_create.html', {'post_form': post_form, 'companydict':companyNamedict})
 
 
-def board_detail(request,post_id):
+def board_detail(request, post_id):
 
     print("디테일함수 들어옴 ")
     post = get_object_or_404(Post, pk=post_id)
@@ -80,7 +143,7 @@ def board_detail(request,post_id):
         comment_form = CommentForm()
         print("디테일 엘스 들어옴 ")
 
-    return render(request, 'detail.html', {'post_form': post_form, 'post': post, 'comment_form': comment_form})
+    return render(request, 'bbs_detail.html', {'post_form': post_form, 'post': post, 'comment_form': comment_form})
 
 
 
