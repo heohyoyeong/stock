@@ -4,60 +4,13 @@ from board.forms import PostForm,CommentForm
 import xml.etree.ElementTree as ET
 import requests
 from board import GetStockCode
+from django.core.paginator import Paginator
 
 
-#### 원본  ####
+
+
+## 원본 ##
 # def board_main_list(request):
-#     companyNamedict= GetStockCode.Get_CSV_Maching_dict()
-#     print("bbbbbbb")
-#     companyName=request.POST.get('machingstock')
-#
-#     # 종목 서치
-#     if companyName != None:
-#         print(companyName)
-#         xmldict=GetStockCode.Get_XML_maching_dict()
-#         corpcode=xmldict[companyName]
-#         print(corpcode)
-#
-#     main_list = Post.objects.all().order_by('-id')
-#     context = {'posts': main_list,'companydict':companyNamedict }
-#
-#
-#     return render(request, 'bbs.html', context)
-
-
-
-#### 수정 테스트 1 ####
-def board_main_list(request):
-    companyNamedict= GetStockCode.Get_CSV_Maching_dict()
-    print("bbbbbbb")
-    companyName=request.POST.get('machingstock')
-
-    # 종목 서치할 수 있게
-    if companyName != None:
-        print(companyName)
-        xmldict=GetStockCode.Get_XML_maching_dict()
-        corpcode=xmldict[companyName]
-        print(corpcode)
-
-        choice_list = Post.objects.filter(maching_code__contains=corpcode).order_by('-id')
-        context = {'posts': choice_list,'companydict':companyNamedict,'corpcode': corpcode, 'ChoicCodeName':companyName }
-
-    else:
-        print('선택한 종목이 없습니다')
-        main_list = Post.objects.all().order_by('-id')
-        context = {'posts': main_list,'companydict':companyNamedict }
-
-    return render(request, 'bbs.html', context)
-
-
-
-
-
-#### 수정 테스트 2 ####
-# def board_main_list(request):
-#
-#     context = {}
 #
 #     companyNamedict= GetStockCode.Get_CSV_Maching_dict()
 #     print("bbbbbbb")
@@ -73,11 +26,6 @@ def board_main_list(request):
 #         choice_list = Post.objects.filter(maching_code__contains=corpcode).order_by('-id')
 #         context = {'posts': choice_list,'companydict':companyNamedict,'corpcode': corpcode, 'ChoicCodeName':companyName }
 #
-#     elif corpcode != xmldict[companyName]:
-#         print('선택한 종목이 없습니다')
-#         main_list = Post.objects.all().order_by('-id')
-#         context = {'posts': main_list,'companydict':companyNamedict }
-#
 #     else:
 #         print('선택한 종목이 없습니다')
 #         main_list = Post.objects.all().order_by('-id')
@@ -86,10 +34,58 @@ def board_main_list(request):
 #     return render(request, 'bbs.html', context)
 
 
-# def board_search_stock_list(request,):
-#     main_list = Post.objects.all().order_by('-id')
-#     context = {'posts': main_list }
-#     return render(request, 'bbs.html', context)
+
+
+
+## 테스트 ##
+
+def board_main_list(request):
+    companyNamedict = GetStockCode.Get_CSV_Maching_dict()
+    print("bbbbbbb")
+    companyName = request.POST.get('machingstock')
+
+
+    # 회사이름으로 필터 (None이 아닐 경우)
+    if companyName != None:
+        print('회사이름'+companyName)
+        xmldict = GetStockCode.Get_XML_maching_dict()
+
+
+        if companyName =="":
+            print('선택한 종목이 없습니다')
+            main_list = Post.objects.all().order_by('-id')
+            paginator = Paginator(main_list,5)
+            page = request.GET.get('page')
+            bbspage = paginator.get_page(page)
+            context = {'posts': main_list, 'companydict': companyNamedict, 'bbspage': bbspage}
+
+        else:
+            corpcode = xmldict[companyName]
+            print('회사코드'+corpcode)
+
+            choice_list = Post.objects.filter(maching_code__contains=corpcode).order_by('-id')
+            paginator = Paginator(choice_list,5)
+            page = request.GET.get('page')
+            bbspage = paginator.get_page(page)
+            context = {'posts': choice_list, 'companydict': companyNamedict, 'corpcode': corpcode,
+                       'ChoicCodeName': companyName, 'bbspage': bbspage}
+
+
+    else:
+        print('선택한 종목이 없습니다')
+        main_list = Post.objects.all().order_by('-id')
+        paginator = Paginator(main_list, 10)
+        page = request.GET.get('page')
+        bbspage = paginator.get_page(page)
+        context = {'posts': main_list, 'companydict': companyNamedict, 'bbspage': bbspage}
+
+    return render(request, 'bbs.html', context)
+
+
+
+
+
+
 
 
 def board_create(request):
@@ -202,6 +198,9 @@ def board_delete(request, post_id):
     post.delete()
 
     return redirect('board:bbs_main')
+
+
+
 
 
 

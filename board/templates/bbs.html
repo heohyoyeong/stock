@@ -80,6 +80,7 @@
               </div>
             </section>
           </div>
+
           <div class="col-sm-9">
             <section class="panel">
               <header class="panel-heading wht-bg">
@@ -88,7 +89,7 @@
                     {{ ChoicCodeName }} 게시글</h2>
                    <!--시작-->
 
-              <div>
+              <div class="centered">
 
 
 
@@ -139,20 +140,8 @@
                         </select>
 
                          <select id = "machingstock" select name="machingstock" class ='selectpicker' style="height: 30px" style="width:80px" >
-{#                             <option value="" selected="selected">종목을 선택하세요</option>#}
+                             <option value="" selected="selected">종목을 선택하세요</option>
 
-
-             <!-- 랜더링해도 원래 선택했던 셀렉트바가 보일 수 있도록 세팅 시작   -->
-
-{#                             {% if companyName  %}#}
-{##}
-{#                             <option value="" selected="selected">{{ companyName }}</option>#}
-{#                            {% else %}#}
-{#                             <option value="" selected="selected">종목을 선택하세요</option>#}
-{##}
-{#                            {% endif %}#}
-
-             <!-- 랜더링해도 원래 선택했던 셀렉트바가 보일 수 있도록 세팅 끝   -->
 
                          </select>
 
@@ -161,37 +150,42 @@
                 </div>
                  <!--끝    -->
               </header>
-              <div class="panel-body minimal">
-                <div class="mail-option">
+{#              <div class="panel-body minimal">#}
+{#                <div class="mail-option">#}
+{##}
+{#                    </div>#}
+{#                  </div>#}
+{#                  <div class="btn-group">#}
+{##}
+{#                      <br>#}
+{#                      </a>#}
+{#                  </div>#}
+{#                  <div class="btn-group hidden-phone">#}
+{##}
+{#                    <ul class="dropdown-menu">#}
+{#                      <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>#}
+{#                      <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>#}
+{#                      <li class="divider"></li>#}
+{#                      <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>#}
+{#                    </ul>#}
+{#                  </div>#}
+{#                  <div class="btn-group">#}
+{#                    <a data-toggle="dropdown" href="#" class="btn mini blue">#}
+{##}
+{##}
+{#                      </a>#}
+{#                    <ul class="dropdown-menu">#}
+{#                      <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>#}
+{#                      <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>#}
+{#                      <li class="divider"></li>#}
+{#                      <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>#}
+{#                    </ul>#}
+{#                  </div>#}
 
-                    </div>
-                  </div>
-                  <div class="btn-group">
-
-                      <br>
-                      </a>
-                  </div>
-                  <div class="btn-group hidden-phone">
-
-                    <ul class="dropdown-menu">
-                      <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
-                      <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>
-                      <li class="divider"></li>
-                      <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-                    </ul>
-                  </div>
-                  <div class="btn-group">
-                    <a data-toggle="dropdown" href="#" class="btn mini blue">
 
 
-                      </a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
-                      <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>
-                      <li class="divider"></li>
-                      <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-                    </ul>
-                  </div>
+
+                <!----페이지네이션 시작 ------>
 {#                  <ul class="unstyled inbox-pagination">#}
 {#                    <li><span>1-50 of 99</span></li>#}
 {#                    <li>#}
@@ -202,8 +196,13 @@
 {#                    </li>#}
 {#                  </ul>#}
 {#                </div>#}
+                <!----페이지네이션 끝 ------>
+
 
          <div class="panel-body">
+
+
+
             <div class="table-inbox-wrap ">
 
                 <table class="table table-inbox table-hover">
@@ -221,7 +220,7 @@
 
                                 </tr>
                             </thead>
-                                {% for post in posts %}
+                                {% for post in bbspage %}
 
                                 <tr>
                                     <td>{{ post.id }}</td>
@@ -238,10 +237,36 @@
                   </table>
 
                 </div>
-              </div>
 
 
-            </div>
+
+         <!----페이지네이션 시작 (수정하고 지울 부분) ------>
+         <div class="col centered">
+             {# first previous #}
+             {% if bbspage.has_previous %}
+            <a href="?page=1">First</a>
+            <a href="?page={{ bbspage.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            {# of #}
+            <span>{{ bbspage.number }}</span>
+            <span>of</span>
+            <span>{{ bbspage.paginator.num_pages }}</span>
+
+            {# Next last #}
+            {% if bbspage.has_next %}
+            <a href="?page={{ bbspage.next_page_number }}">Next</a>
+            <a href="?page={{ bbspage.paginator.num_pages }}">Last</a>
+            {% endif %}
+         </div>
+        <!----페이지네이션 끝 ------>
+
+
+
+         </div>
+
+
+
 
             </section>
 
