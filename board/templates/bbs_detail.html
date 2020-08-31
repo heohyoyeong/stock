@@ -158,15 +158,82 @@
                                 </tr>
                       </thead>
                       <tbody>
-                              {% for comment in post.comments.all %}
+                              {% for comment_list in commentpage %}
+{#                              {% for comment in post.comments.all %}#}
                                 <tr>
-                                    <td>{{ comment.author }}</td>
-                                    <td>{{ comment.text }}</td>
-                                    <td>{{ comment.created_date }}</td>
+                                    <td>{{ comment_list.author }}</td>
+                                    <td>{{ comment_list.text }}</td>
+                                    <td>{{ comment_list.created_date }}</td>
                                 </tr>
                               {% endfor %}
                       </tbody>
                     </table>
+
+                           <!----페이지네이션 시작 (수정하고 지울 부분) ------>
+         <div class="col centered">
+             {# first previous #}
+             {% if commentpage.has_previous %}
+            <a href="?page=1">First</a>
+            <a href="?page={{ commentpage.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            {# of #}
+            <span>{{ commentpage.number }}</span>
+            <span>of</span>
+            <span>{{ commentpage.paginator.num_pages }}</span>
+
+            {# Next last #}
+            {% if commentpage.has_next %}
+            <a href="?page={{ commentpage.next_page_number }}">Next</a>
+            <a href="?page={{ commentpage.paginator.num_pages }}">Last</a>
+            {% endif %}
+         </div>
+        <!----페이지네이션 끝 ------>
+
+
+
+{#                  <!-- comment pagination start -->#}
+{#                  <ul class="pagination justify-content-center">#}
+{#                      {% if commentpage.has_previous %}#}
+{#                      <li class="page-item">#}
+{#                          <a class="page-link" href="?page{{ commentpage.previous_page_number }}">이전</a>#}
+{#                      </li>#}
+{#                      {% else %}#}
+{#                      <li class="page-item disabled">#}
+{#                          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>#}
+{#                      </li>#}
+{#                      {% endif %}#}
+{##}
+{##}
+{#                  <!-- pagelist -->#}
+{#                  {% for page_number in commentpage.paginator.page_range %}#}
+{#                    {% if page_number == commentpage.number %}#}
+{#                    <li class="page-item active" aria-current="page">#}
+{#                        <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>#}
+{#                    </li>#}
+{#                  {% else %}#}
+{#                  <li class="page-item">#}
+{#                      <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>#}
+{#                  </li>#}
+{#                  {% endif %}#}
+{#                  {% endfor %}#}
+{##}
+{#                  <!--nextpage-->#}
+{#                  {% if commentpage.has_next %}#}
+{#                  <li class = "page-item">#}
+{#                      <a class="page-link" href="?page={{ commentpage.next_page_number }}">다음</a>#}
+{#                  </li>#}
+{#                  {% else %}#}
+{#                  <li class="page-item disabled">#}
+{#                      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>#}
+{#                  </li>#}
+{#                  {% endif %}#}
+{#                  </ul>#}
+{#                  <!--pagination end-->#}
+
+
+
+
                    </ul>
                 </div>
 
