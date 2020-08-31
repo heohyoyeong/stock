@@ -9,15 +9,8 @@ import pandas as pd
 import re
 from bs4 import BeautifulSoup
 from stock.forms import stocknameForm , stockhistoryForm
-# <<<<<<< HEAD
-# # import time, win32con, win32api, win32gui
-# <<<<<<< HEAD
-#
-# =======
-# >>>>>>> 5f74edc43b5e41801852017a1f542fe16fd6a6d2
-# =======
-# import time, win32con, win32api, win32gui
-# >>>>>>> cf85975eb1c951a2e2e20c2d58b43baa8475750a
+import time, win32con, win32api, win32gui
+
 
 # 로그인
 def s_login(request):
