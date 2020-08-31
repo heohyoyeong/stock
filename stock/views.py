@@ -754,6 +754,6 @@ def mysiteadd(request,code_num):
     # GET 방식으로 호출될때 => form action을 사용하지않는 거의 모든 방식
     else:
         datt_form=stocknameForm() #PostForm의 인자가 ()처럼 비어있기 때문에 비어있는 형태로 출력된다.
-
-        return render(request, 'mysiteadd.html',{'datt_form':datt_form})
+        context['datt_form']=datt_form
+        return render(request, 'mysiteadd.html',context)
 

@@ -80,8 +80,8 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="{% url 'stock:detail' %}"><img src="/static/img/ui-sam.jpeg" class="img-circle" width="80"></a></p>
-          <h5 class="centered">{{user_name}}</h5>
+          <p class="centered"><a href="{% url 'stock:profile' %}"><img src="/static/img/ui-sam.jpeg" class="img-circle" width="80"></a></p>
+          <h5 class="centered">{{userss}}</h5>
           <li class="mt">
             <a class="active" href="{% url 'stock:detail' %}">
               <i class="fa fa-dashboard"></i>
@@ -89,14 +89,29 @@
               </a>
           </li>
           <li class="sub-menu">
-              <a href="{% url 'board:bbs_main' %}">
+              <a href={% url 'board:bbs_main' %}>
               <i class="fa fa-envelope"></i>
               <span> BBS </span>
-              <span class="label label-theme pull-right mail-info">2</span>
+              <span class="label label-theme pull-right mail-info"></span>
               </a>
+          </li>
+          <li class="sub-menu">
+            <a href={% url 'stock:calendar' %}>
+              <i class="fa fa-cogs"></i>
+              <span> Calendar </span>
+              <span class="label label-theme pull-right mail-info"></span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href={% url 'stock:mysite' user_id %}>
+              <i class="fa fa-desktop"></i>
+              <span> My Stock </span>
+              <span class="label label-theme pull-right mail-info"></span>
+            </a>
           </li>
         </ul>
         <!-- sidebar menu end-->
+
       </div>
     </aside>
     <!--sidebar end-->

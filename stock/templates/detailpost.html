@@ -80,8 +80,8 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="{% url 'stock:detail' %}"><img src="/static/img/ui-sam.jpeg" class="img-circle" width="80"></a></p>
-          <h5 class="centered">{{ userss }}</h5>
+          <p class="centered"><a href="{% url 'stock:profile' %}"><img src="/static/img/ui-sam.jpeg" class="img-circle" width="80"></a></p>
+          <h5 class="centered">{{userss}}</h5>
           <li class="mt">
             <a class="active" href="{% url 'stock:detail' %}">
               <i class="fa fa-dashboard"></i>
@@ -89,26 +89,29 @@
               </a>
           </li>
           <li class="sub-menu">
-              <a href="{% url 'board:bbs_main' %}">
+              <a href={% url 'board:bbs_main' %}>
               <i class="fa fa-envelope"></i>
               <span> BBS </span>
-              <span class="label label-theme pull-right mail-info">2</span>
+              <span class="label label-theme pull-right mail-info"></span>
               </a>
           </li>
           <li class="sub-menu">
-            <a href="javascript:;">
-              <i class=" fa fa-bar-chart-o"></i>
-              <span>Charts</span>
-              </a>
-            <ul class="sub">
-              <li><a href="morris.html">Morris</a></li>
-              <li><a href="chartjs.html">Chartjs</a></li>
-              <li><a href="flot_chart.html">Flot Charts</a></li>
-              <li><a href="xchart.html">xChart</a></li>
-            </ul>
+            <a href={% url 'stock:calendar' %}>
+              <i class="fa fa-cogs"></i>
+              <span> Calendar </span>
+              <span class="label label-theme pull-right mail-info"></span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href={% url 'stock:mysite' user_id %}>
+              <i class="fa fa-desktop"></i>
+              <span> My Stock </span>
+              <span class="label label-theme pull-right mail-info"></span>
+            </a>
           </li>
         </ul>
         <!-- sidebar menu end-->
+
       </div>
     </aside>
     <!--sidebar end-->
@@ -121,7 +124,7 @@
         <div class="row">
           <div class="col-lg-9 main-chart">
             <div class="container">
-<h1>Bulletin Board System(BBS)</h1>
+<h1>Detail of Stock</h1>
                 <form action="{% url 'stock:mysiteadd' code_num %}" method="get">
                     {% csrf_token %}
                    <input type="submit" class="btn btn-warning" value="관심종목추가">
