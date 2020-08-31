@@ -16,7 +16,7 @@
   <link href="/static/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
   <link rel="stylesheet" href="/static/lib/xchart/xcharts.css">
   <!-- Custom styles for this template -->
-  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/detailstyle.css" rel="stylesheet">
   <link href="/static/css/style-responsive.css" rel="stylesheet">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -261,7 +261,7 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="{% url 'stock:detail' %}"><img src="/static/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
+          <p class="centered"><a href="{% url 'stock:detail' %}"><img src="/static/img/ui-sam.jpeg" class="img-circle" width="80"></a></p>
           <h5 class="centered">{{ userss }}</h5>
           <li class="mt">
             <a class="active" href="{% url 'stock:detail' %}">
@@ -532,118 +532,32 @@
                 <div class="chart">
                   <div class="centered">
                     <span>TODAY EARNINGS</span>
-                    <strong>$ 890,00 | 15%</strong>
+                    <strong>15%</strong>
                   </div>
                   <br>
                   <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,564,455]"></div>
                 </div>
               </div>
             </div>
-            <!--new earning end-->
-            <!-- RECENT ACTIVITIES SECTION -->
-            <h4 class="centered mt">RECENT ACTIVITY</h4>
-            <!-- First Activity -->
-            <div class="desc">
-              <div class="thumb">
-                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-              </div>
-              <div class="details">
-                <p>
-                  <muted>Just Now</muted>
-                  <br/>
-                  <a href="#">Paul Rudd</a> purchased an item.<br/>
-                </p>
-              </div>
-            </div>
-            <!-- Second Activity -->
-            <div class="desc">
-              <div class="thumb">
-                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-              </div>
-              <div class="details">
-                <p>
-                  <muted>2 Minutes Ago</muted>
-                  <br/>
-                  <a href="#">James Brown</a> subscribed to your newsletter.<br/>
-                </p>
-              </div>
-            </div>
-            <!-- Third Activity -->
-            <div class="desc">
-              <div class="thumb">
-                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-              </div>
-              <div class="details">
-                <p>
-                  <muted>3 Hours Ago</muted>
-                  <br/>
-                  <a href="#">Diana Kennedy</a> purchased a year subscription.<br/>
-                </p>
-              </div>
-            </div>
-            <!-- Fourth Activity -->
-            <div class="desc">
-              <div class="thumb">
-                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-              </div>
-              <div class="details">
-                <p>
-                  <muted>7 Hours Ago</muted>
-                  <br/>
-                  <a href="#">Brando Page</a> purchased a year subscription.<br/>
-                </p>
-              </div>
-            </div>
-            <!-- USERS ONLINE SECTION -->
-            <h4 class="centered mt">TEAM MEMBERS ONLINE</h4>
+                  <!-- /weather-2 header -->
+                  <div class="row centered">
+                    <img src="/static/img/ny.jpg" class="img-circle" width="200">
+                  </div>
+                  <div class="row data">
+                    <div class="col-sm-6 col-xs-6 goleft">
+                      <h4><b>16 ºC</b></h4>
+                      <h6>21º max</h6>
+                      <h6>8º min</h6>
+                    </div>
+                    <div class="col-sm-6 col-xs-6 goright">
+                      <h5><i class="fa fa-sun-o fa-2x"></i></h5>
+                      <h6><b>Sunny</b></h6>
+                      <h5>7:15 am</h5>
+                    </div>
+                  </div>
+
             <!-- First Member -->
-            <div class="desc">
-              <div class="thumb">
-                <img class="img-circle" src="/static/img/ui-divya.jpg" width="35px" height="35px" align="">
-              </div>
-              <div class="details">
-                <p>
-                  <a href="#">DIVYA MANIAN</a><br/>
-                  <muted>Available</muted>
-                </p>
-              </div>
-            </div>
             <!-- Second Member -->
-            <div class="desc">
-              <div class="thumb">
-                <img class="img-circle" src="/static/img/ui-sherman.jpg" width="35px" height="35px" align="">
-              </div>
-              <div class="details">
-                <p>
-                  <a href="#">DJ SHERMAN</a><br/>
-                  <muted>I am Busy</muted>
-                </p>
-              </div>
-            </div>
-            <!-- Third Member -->
-            <div class="desc">
-              <div class="thumb">
-                <img class="img-circle" src="/static/img/ui-danro.jpg" width="35px" height="35px" align="">
-              </div>
-              <div class="details">
-                <p>
-                  <a href="#">DAN ROGERS</a><br/>
-                  <muted>Available</muted>
-                </p>
-              </div>
-            </div>
-            <!-- Fourth Member -->
-            <div class="desc">
-              <div class="thumb">
-                <img class="img-circle" src="/static/img/ui-zac.jpg" width="35px" height="35px" align="">
-              </div>
-              <div class="details">
-                <p>
-                  <a href="#">Zac Sniders</a><br/>
-                  <muted>Available</muted>
-                </p>
-              </div>
-            </div>
             <!-- CALENDAR-->
             <div id="calendar" class="mb">
               <div class="panel green-panel no-margin">
@@ -658,6 +572,7 @@
               </div>
             </div>
             <!-- / calendar -->
+
           </div>
           <!-- /col-lg-3 -->
         </div>
@@ -710,7 +625,7 @@
         // (string | mandatory) the text inside the notification
         text: 'Hover me to enable the Close Button. You can hide the left sidebar clicking on the button next to the logo.',
         // (string | optional) the image to display on the left
-        image: '/static/img/ui-sam.jpg',
+        image: '/static/img/ui-sam.jpeg',
         // (bool | optional) if you want it to fade out on its own or just sit there
         sticky: false,
         // (int | optional) the time you want it to be alive for before fading out
