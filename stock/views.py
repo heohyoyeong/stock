@@ -617,8 +617,10 @@ def s_bbs_create(request):
     return render(request,'bbs_create.html')
 
 def s_calendar(request):
-
-    return  render(request,'calendar.html')
+    aldd = request.session['userss']
+    aldd_id = request.session['user_id']
+    context={'userss':aldd,'user_id':aldd_id}
+    return  render(request,'calendar.html',context)
 
 
 def mysite(request,user_id):
