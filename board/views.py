@@ -112,15 +112,15 @@ def board_main_list(request):
                 Q(contents__icontains=kw)
                 # Q(author__username__icontain=kw)
             ).distinct()
-            paginator = Paginator(post, 5)
+            paginator = Paginator(post, 10)
             page = request.GET.get('page')
             bbspage = paginator.get_page(page)
             context = {'posts': post, 'companydict': companyNamedict, 'bbspage': bbspage}
 
-        if companyName =="":
+        if companyName == '':
             print('선택한 종목이 없습니다')
             main_list = Post.objects.all().order_by('-id')
-            paginator = Paginator(main_list,5)
+            paginator = Paginator(main_list, 10)
             page = request.GET.get('page')
             bbspage = paginator.get_page(page)
             context = {'posts': main_list, 'companydict': companyNamedict, 'bbspage': bbspage, 'userss': user_id}
@@ -133,7 +133,7 @@ def board_main_list(request):
 
             choice_list = Post.objects.filter(maching_code__contains=corpcode).order_by('-id')
            # kw = Post.objects.filter(maching_code__contains=corpcode).order_by('-id')
-            paginator = Paginator(choice_list,5)
+            paginator = Paginator(choice_list, 10)
             page = request.GET.get('page')
             bbspage = paginator.get_page(page)
             context = {'posts': choice_list, 'companydict': companyNamedict, 'corpcode': corpcode,
@@ -146,7 +146,7 @@ def board_main_list(request):
                     Q(contents__icontains=kw)
                     # Q(author__username__icontain=kw)
                 ).distinct()
-                paginator = Paginator(post, 5)
+                paginator = Paginator(post, 10)
                 page = request.GET.get('page')
                 bbspage = paginator.get_page(page)
                 context = {'posts': choice_list, 'companydict': companyNamedict, 'corpcode': corpcode,
@@ -158,7 +158,7 @@ def board_main_list(request):
         print('선택한 종목이 없습니다')
         main_list = Post.objects.all().order_by('-id')
 
-        paginator = Paginator(main_list, 5)
+        paginator = Paginator(main_list, 10)
         page = request.GET.get('page')
         bbspage = paginator.get_page(page)
         context = {'posts': main_list, 'companydict': companyNamedict, 'bbspage': bbspage, 'userss': user_id}
@@ -173,7 +173,7 @@ def board_main_list(request):
                 # Q(author__name__icontain=kw)
             ).distinct()
             print(post)
-            paginator = Paginator(post, 5)
+            paginator = Paginator(post, 10)
             page = request.GET.get('page')
             bbspage = paginator.get_page(page)
             context = {'posts': post, 'companydict': companyNamedict, 'bbspage': bbspage, 'userss': user_id}
@@ -184,16 +184,16 @@ def board_main_list(request):
 
 
 
-
 def board_create(request):
     print('board_create')
+    user_id = request.session['userss']
     companyNamedict = GetStockCode.Get_CSV_Maching_dict()
     companyName = request.POST.get('machingstock')
     print(companyName)
-    xmlDict=GetStockCode.Get_XML_maching_dict()
-    match_code=''
+    xmlDict = GetStockCode.Get_XML_maching_dict()
+    match_code = ''
     if companyName is not None:
-        match_code=xmlDict[companyName]
+        match_code = xmlDict[companyName]
         print(match_code)
 
 
@@ -204,11 +204,12 @@ def board_create(request):
 
         if post_form.is_valid():
             print('폼이상')
-            if match_code !='':
+            if match_code != '':
                 print(post_form)
                 # commit=False : db에 넣지말고 객체를 가져와라->post에 넣어줌
-                post=post_form.save(commit=False)
-                post.maching_code=match_code
+                post = post_form.save(commit=False)
+                post.maching_code = match_code
+                post.stock_name = companyName
                 post.save()
             #post_form.save()
             return redirect('board:bbs_main')
@@ -217,12 +218,15 @@ def board_create(request):
         post_form = PostForm()
         print('get으로 들어온다 ')
 
-    return render(request, 'bbs_create.html', {'post_form': post_form, 'companydict':companyNamedict})
+    return render(request, 'bbs_create.html', {'post_form': post_form, 'companydict': companyNamedict, 'userss': user_id })
+
+
+
 
 
 def board_detail(request, post_id):
 
-    print("디테일함수 들어옴 ")
+    user_id = request.session['userss']
     post = get_object_or_404(Post, pk=post_id)
 
     if request.method == 'POST':
@@ -236,7 +240,7 @@ def board_detail(request, post_id):
         comment_form = CommentForm()
         print("디테일 엘스 들어옴 ")
 
-    return render(request, 'bbs_detail.html', {'post_form': post_form, 'post': post, 'comment_form': comment_form})
+    return render(request, 'bbs_detail.html', {'post_form': post_form, 'post': post, 'comment_form': comment_form, 'userss': user_id})
 
 
 ### 원본 ###
@@ -266,6 +270,8 @@ def board_detail(request, post_id):
 #
 #     print("pComment 그린다 ")
 #     return redirect(request,'board:bbs_detail', post_id=post_id)
+
+
 
 
 

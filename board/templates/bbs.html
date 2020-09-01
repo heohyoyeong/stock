@@ -215,6 +215,7 @@
                             <thead class="thead-dark"> <!-- 제목 -->
                                 <tr>
                                     <th scope="col">번호</th>
+                                    <th scope="col">분류</th>
                                     <th scope="col">제목 </th>
                                     <th scope="col">작성자 </th>
                                     <th scope="col">작성일 </th>
@@ -223,11 +224,13 @@
                             </thead>
                                 {% for post in bbspage %}
 
+
                                 <tr>
                                     <td>{{ post.id }}</td>
+                                    <td>{{ post.stock_name }}</td>
                                     <td><a href="{% url 'board:bbs_detail' post.id %}">{{ post.title }}</a></td>
                                     <td>{{ post.author }}</td>
-                                    <td>{{ post.pub_date|date:'Y-m-d:H-m-s' }}</td>
+                                    <td>{{ post.pub_date|date:'Y-m-d H:m:s' }}</td>
                                 </tr>
 
                                 {% endfor %}

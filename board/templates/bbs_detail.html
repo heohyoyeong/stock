@@ -103,34 +103,32 @@
             <section class="panel">
               <header class="panel-heading wht-bg">
                 <h4 class="gen-case">
-                    {{ ChoicCodeName }} 게시판
+                    {{ post.stock_name }} 게시판
                   </h4>
               </header>
-
-
-
 
               <div class="panel-body ">
                 <div class="mail-header row">
                   <div class="col-md-8">
-                    <h4 class="pull-left"> 제목 : {{ post.title }} </h4>
-                  </div>
-                </div>
+                    <h4 class="pull-left">{{ post.title }} </h4>
+
+
 
 
                 <div class="mail-sender">
                   <div class="row">
                     <div class="col-md-8">
-                        <strong>글쓴이 : {{ post.author }}</strong>
+                        <strong>{{ post.author }}</strong>
                     </div>
                     <div class="col-md-4">
-                      <p class="date"> {{ post.pub_date }} </p>
+                      <p class="date"> {{ post.pub_date|date:'Y-m-d H:m:s' }} </p>
                     </div>
                   </div>
                 </div>
 
 
                 <div class="view-mail" >
+
                     {{ post.contents }}
 
 
@@ -163,7 +161,7 @@
                                 <tr>
                                     <td>{{ comment_list.author }}</td>
                                     <td>{{ comment_list.text }}</td>
-                                    <td>{{ comment_list.created_date }}</td>
+                                    <td>{{ comment_list.created_date|date:'Y-m-d H:m:s' }}</td>
                                 </tr>
                               {% endfor %}
                       </tbody>
@@ -239,7 +237,7 @@
 
 
                 <div class="compose-btn pull-left">
-                  <a href="mail_compose.html" class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> 게시판으로 </a>
+                  <a href="{% url 'board:bbs_main' %}" class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> 게시판으로 </a>
                 </div>
               </div>
             </section>

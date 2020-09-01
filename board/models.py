@@ -9,7 +9,9 @@ class Post(models.Model):
     title = models.CharField("제목", max_length=100)
     contents = models.TextField('글 내용', max_length=2000)
     pub_date = models.DateTimeField('날짜',auto_now=True)
-    maching_code = models.CharField("작성게시판", max_length=100)
+    maching_code = models.CharField("작성게시판코드명", max_length=100)
+    stock_name = models.CharField("작성게시판", max_length=100, blank=True)
+
 
 
     def __str__(self):
