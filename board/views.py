@@ -91,7 +91,8 @@ from stock.models import User
 
 def board_main_list(request):
     companyNamedict = GetStockCode.Get_CSV_Maching_dict()
-    user_id = request.session['userss']
+    user_name = request.session['userss']
+    user_id = request.session['user_id']
     kw = request.GET.get('search_key', '')
     print(kw)
 
@@ -123,7 +124,7 @@ def board_main_list(request):
             paginator = Paginator(main_list, 10)
             page = request.GET.get('page')
             bbspage = paginator.get_page(page)
-            context = {'posts': main_list, 'companydict': companyNamedict, 'bbspage': bbspage, 'userss': user_id}
+            context = {'posts': main_list, 'companydict': companyNamedict, 'bbspage': bbspage, 'userss': user_name, 'user_id': user_id}
 
 
 
@@ -137,7 +138,7 @@ def board_main_list(request):
             page = request.GET.get('page')
             bbspage = paginator.get_page(page)
             context = {'posts': choice_list, 'companydict': companyNamedict, 'corpcode': corpcode,
-                       'ChoicCodeName': companyName, 'bbspage': bbspage, 'userss':user_id}
+                       'ChoicCodeName': companyName, 'bbspage': bbspage, 'userss': user_name, 'user_id': user_id}
 
             if kw != None:
                 print('2들어옴')
@@ -150,7 +151,7 @@ def board_main_list(request):
                 page = request.GET.get('page')
                 bbspage = paginator.get_page(page)
                 context = {'posts': choice_list, 'companydict': companyNamedict, 'corpcode': corpcode,
-                           'ChoicCodeName': companyName, 'bbspage': bbspage, 'userss': user_id}
+                           'ChoicCodeName': companyName, 'bbspage': bbspage, 'userss': user_name, 'user_id': user_id}
 
 
 
@@ -161,7 +162,7 @@ def board_main_list(request):
         paginator = Paginator(main_list, 10)
         page = request.GET.get('page')
         bbspage = paginator.get_page(page)
-        context = {'posts': main_list, 'companydict': companyNamedict, 'bbspage': bbspage, 'userss': user_id}
+        context = {'posts': main_list, 'companydict': companyNamedict, 'bbspage': bbspage, 'userss': user_name, 'user_id': user_id}
 
         if kw != None:
             print('1들어옴')
@@ -176,7 +177,7 @@ def board_main_list(request):
             paginator = Paginator(post, 10)
             page = request.GET.get('page')
             bbspage = paginator.get_page(page)
-            context = {'posts': post, 'companydict': companyNamedict, 'bbspage': bbspage, 'userss': user_id}
+            context = {'posts': post, 'companydict': companyNamedict, 'bbspage': bbspage, 'userss': user_name, 'user_id': user_id}
 
 
     return render(request, 'bbs.html', context)
@@ -186,7 +187,8 @@ def board_main_list(request):
 
 def board_create(request):
     print('board_create')
-    user_id = request.session['userss']
+    user_name = request.session['userss']
+    user_id = request.session['user_id']
     companyNamedict = GetStockCode.Get_CSV_Maching_dict()
     companyName = request.POST.get('machingstock')
     print(companyName)
@@ -218,15 +220,15 @@ def board_create(request):
         post_form = PostForm()
         print('get으로 들어온다 ')
 
-    return render(request, 'bbs_create.html', {'post_form': post_form, 'companydict': companyNamedict, 'userss': user_id })
+    return render(request, 'bbs_create.html', {'post_form': post_form, 'companydict': companyNamedict, 'userss': user_name, 'user_id': user_id })
 
 
 
 
 
 def board_detail(request, post_id):
-
-    user_id = request.session['userss']
+    user_name = request.session['userss']
+    user_id = request.session['user_id']
     post = get_object_or_404(Post, pk=post_id)
 
     if request.method == 'POST':
@@ -240,7 +242,7 @@ def board_detail(request, post_id):
         comment_form = CommentForm()
         print("디테일 엘스 들어옴 ")
 
-    return render(request, 'bbs_detail.html', {'post_form': post_form, 'post': post, 'comment_form': comment_form, 'userss': user_id})
+    return render(request, 'bbs_detail.html', {'post_form': post_form, 'post': post, 'comment_form': comment_form, 'userss': user_name, 'user_id': user_id})
 
 
 ### 원본 ###
