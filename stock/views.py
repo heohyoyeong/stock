@@ -9,7 +9,7 @@ import pandas as pd
 import re
 from bs4 import BeautifulSoup
 from stock.forms import stocknameForm , stockhistoryForm
-import time, win32con, win32api, win32gui
+# import time, win32con, win32api, win32gui
 
 
 # 로그인
