@@ -63,7 +63,7 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="{% url 'stock:profile' %}"><img src="/static/img/ui-sam.jpeg" class="img-circle" width="80"></a></p>
+          <p class="centered"><a href="{% url 'stock:detail' %}"><img src="/static/img/ui-sam.jpeg" class="img-circle" width="80"></a></p>
           <h5 class="centered">{{user_name}}</h5>
           <li class="mt">
             <a class="active" href="{% url 'stock:detail' %}">
@@ -128,10 +128,7 @@
               <div class="col-md-4 centered">
                 <div class="profile-pic">
                   <p><img src="/static/img/ui-sam.jpeg" class="img-circle"></p>
-                  <p>
-                    <button class="btn btn-theme"><i class="fa fa-check"></i> Follow</button>
-                    <button class="btn btn-theme02">Add</button>
-                  </p>
+
                 </div>
               </div>
               <!-- /col-md-4 -->
