@@ -368,26 +368,28 @@ def board_update(request, post_id):
     chat = Chat.objects.all()
 
     post = get_object_or_404(Post, pk=post_id)
-    context = {'chat': chat}
+    context={'chat': chat,'userss': user_name,'user_id': user_id}
     if request.method == 'POST':
         post_form = PostForm(request.POST, instance=post)
 
         if post_form.is_valid(): # 입력한 데이터에 문제가 없다면
             post_form.save() # 포스트 폼에 저장한다
-            context['post_form':post_form]
-            return redirect('board:bbs_detail', post_id=post_id)
+            context['post_form']=post_form
+            posts = Post.objects.all()
+            context['bbspage'] = posts
+            return render(request,'bbs.html', context)
             # 네임스페이스가 posts이고 urlpattern에서 name이 list인
             # url로 리다이렉션
 
     else:
         post_form = PostForm(instance=post)
-        context['post_form':post_form]
+
         # 수정 시 빈 칸이 아니라 instance에 post 데이터를 가져오는 칸을 만들어줌
 
 
-    return render(request, 'bbs_create.html', {'post_form': post_form, 'userss': user_name, 'user_id': user_id})
+        return render(request, 'bbs_create.html', {'post_form': post_form, 'userss': user_name, 'user_id': user_id, 'chat': chat})
 
-    return render(request, 'bbs_create.html', context)
+
 
 
 
@@ -395,9 +397,12 @@ def board_update(request, post_id):
 def board_delete(request, post_id):
     post = Post.objects.get(id=post_id) # id가 인자로 넘어온 id와 일치한 객체만 post에 넘겨줌
     post.delete()
+    user_name = request.session['userss']
+    user_id = request.session['user_id']
+    posts= Post.objects.all()
     chat = Chat.objects.all()
-    context={'chat': chat}
-    return redirect('board:bbs_main',context)
+    context={'chat': chat,'userss': user_name,'user_id': user_id,'bbspage': posts,}
+    return render(request,'bbs.html',context)
 
 
 
