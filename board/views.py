@@ -359,6 +359,8 @@ def board_send_comment(request, post_id):
 
 
 def board_update(request, post_id):
+    user_name = request.session['userss']
+    user_id = request.session['user_id']
 
     post = get_object_or_404(Post, pk=post_id)
 
@@ -375,7 +377,7 @@ def board_update(request, post_id):
         post_form = PostForm(instance=post)
         # 수정 시 빈 칸이 아니라 instance에 post 데이터를 가져오는 칸을 만들어줌
 
-    return render(request, 'bbs_create.html', {'post_form': post_form})
+    return render(request, 'bbs_create.html', {'post_form': post_form, 'userss': user_name, 'user_id': user_id})
 
 
 
