@@ -6,7 +6,7 @@ import requests
 from board import GetStockCode
 from django.core.paginator import Paginator
 from django.db.models import Q
-from stock.models import User
+from stock.models import Chat
 
 
 
@@ -94,6 +94,7 @@ def board_main_list(request):
     user_name = request.session['userss']
     user_id = request.session['user_id']
     kw = request.GET.get('search_key', '')
+    chat = Chat.objects.all()
     print(kw)
 
 
@@ -124,7 +125,7 @@ def board_main_list(request):
             paginator = Paginator(main_list, 10)
             page = request.GET.get('page')
             bbspage = paginator.get_page(page)
-            context = {'posts': main_list, 'companydict': companyNamedict, 'bbspage': bbspage, 'userss': user_name, 'user_id': user_id}
+            context = {'posts': main_list, 'companydict': companyNamedict, 'bbspage': bbspage, 'userss': user_name, 'user_id': user_id, 'chat': chat}
 
 
 
@@ -138,7 +139,7 @@ def board_main_list(request):
             page = request.GET.get('page')
             bbspage = paginator.get_page(page)
             context = {'posts': choice_list, 'companydict': companyNamedict, 'corpcode': corpcode,
-                       'ChoicCodeName': companyName, 'bbspage': bbspage, 'userss': user_name, 'user_id': user_id}
+                       'ChoicCodeName': companyName, 'bbspage': bbspage, 'userss': user_name, 'user_id': user_id, 'chat': chat}
 
             if kw != None:
                 print('2들어옴')
@@ -151,7 +152,7 @@ def board_main_list(request):
                 page = request.GET.get('page')
                 bbspage = paginator.get_page(page)
                 context = {'posts': choice_list, 'companydict': companyNamedict, 'corpcode': corpcode,
-                           'ChoicCodeName': companyName, 'bbspage': bbspage, 'userss': user_name, 'user_id': user_id}
+                           'ChoicCodeName': companyName, 'bbspage': bbspage, 'userss': user_name, 'user_id': user_id, 'chat': chat}
 
 
 
@@ -162,7 +163,7 @@ def board_main_list(request):
         paginator = Paginator(main_list, 10)
         page = request.GET.get('page')
         bbspage = paginator.get_page(page)
-        context = {'posts': main_list, 'companydict': companyNamedict, 'bbspage': bbspage, 'userss': user_name, 'user_id': user_id}
+        context = {'posts': main_list, 'companydict': companyNamedict, 'bbspage': bbspage, 'userss': user_name, 'user_id': user_id, 'chat': chat}
 
         if kw != None:
             print('1들어옴')
@@ -177,7 +178,7 @@ def board_main_list(request):
             paginator = Paginator(post, 10)
             page = request.GET.get('page')
             bbspage = paginator.get_page(page)
-            context = {'posts': post, 'companydict': companyNamedict, 'bbspage': bbspage, 'userss': user_name, 'user_id': user_id}
+            context = {'posts': post, 'companydict': companyNamedict, 'bbspage': bbspage, 'userss': user_name, 'user_id': user_id, 'chat': chat}
 
 
     return render(request, 'bbs.html', context)
@@ -188,7 +189,7 @@ def board_main_list(request):
 
 def board_create(request):
     print('board_create')
-
+    chat = Chat.objects.all()
     user_name = request.session['userss']
     user_id = request.session['user_id']
 
@@ -228,7 +229,7 @@ def board_create(request):
         post_form = PostForm()
         print('get으로 들어온다 ')
 
-    return render(request, 'bbs_create.html', {'post_form': post_form, 'companydict': companyNamedict, 'userss': user_name, 'user_id': user_id })
+    return render(request, 'bbs_create.html', {'post_form': post_form, 'companydict': companyNamedict, 'userss': user_name, 'user_id': user_id, 'chat': chat })
 
 
 
@@ -238,7 +239,7 @@ def board_detail(request, post_id):
     user_name = request.session['userss']
     user_id = request.session['user_id']
     post = get_object_or_404(Post, pk=post_id)
-
+    chat = Chat.objects.all()
     if request.method == 'POST':
         post_form = PostForm(request.POST, instance=post)
         print("디테일 포스트로 들어옴 ")
@@ -250,7 +251,7 @@ def board_detail(request, post_id):
         comment_form = CommentForm()
         print("디테일 엘스 들어옴 ")
 
-    return render(request, 'bbs_detail.html', {'post_form': post_form, 'post': post, 'comment_form': comment_form, 'userss': user_name, 'user_id': user_id})
+    return render(request, 'bbs_detail.html', {'post_form': post_form, 'post': post, 'comment_form': comment_form, 'userss': user_name, 'user_id': user_id, 'chat': chat})
 
 
 ### 원본 ###
@@ -288,7 +289,7 @@ def board_detail(request, post_id):
 ### 테스트 ###
 
 def board_send_comment(request, post_id):
-
+        chat = Chat.objects.all()
         user_name = request.session['userss']
         user_id = request.session['user_id']
         print("Comment 들어왔다")
@@ -325,7 +326,7 @@ def board_send_comment(request, post_id):
             paginator = Paginator(comment_list, 5)
             commentpage = paginator.get_page(page)
 
-            context = {'comment_list': comment_list,'post_form': post_form, 'post': post, 'comment_form': form, 'page': page, 'commentpage': commentpage, 'userss': user_name, 'user_id': user_id}
+            context = {'comment_list': comment_list,'post_form': post_form, 'post': post, 'comment_form': form, 'page': page, 'commentpage': commentpage, 'userss': user_name, 'user_id': user_id, 'chat': chat}
 
 
             if form.is_valid():
@@ -337,7 +338,7 @@ def board_send_comment(request, post_id):
                 paginator = Paginator(comment_list, 5)
                 commentpage = paginator.get_page(page)
 
-                context = {'comment_list': comment_list,'post_form': post_form, 'post': post, 'comment_form': form, 'page': page, 'commentpage': commentpage, 'userss': user_name, 'user_id': user_id}
+                context = {'comment_list': comment_list,'post_form': post_form, 'post': post, 'comment_form': form, 'page': page, 'commentpage': commentpage, 'userss': user_name, 'user_id': user_id, 'chat': chat}
 
                 return render(request, 'bbs_detail.html', context)
 
@@ -359,31 +360,34 @@ def board_send_comment(request, post_id):
 
 
 def board_update(request, post_id):
-
+    chat = Chat.objects.all()
     post = get_object_or_404(Post, pk=post_id)
-
+    context = {'chat': chat}
     if request.method == 'POST':
         post_form = PostForm(request.POST, instance=post)
 
         if post_form.is_valid(): # 입력한 데이터에 문제가 없다면
             post_form.save() # 포스트 폼에 저장한다
+            context['post_form':post_form]
             return redirect('board:bbs_detail', post_id=post_id)
             # 네임스페이스가 posts이고 urlpattern에서 name이 list인
             # url로 리다이렉션
 
     else:
         post_form = PostForm(instance=post)
+        context['post_form':post_form]
         # 수정 시 빈 칸이 아니라 instance에 post 데이터를 가져오는 칸을 만들어줌
 
-    return render(request, 'bbs_create.html', {'post_form': post_form})
+    return render(request, 'bbs_create.html', context)
 
 
 
 def board_delete(request, post_id):
     post = Post.objects.get(id=post_id) # id가 인자로 넘어온 id와 일치한 객체만 post에 넘겨줌
     post.delete()
-
-    return redirect('board:bbs_main')
+    chat = Chat.objects.all()
+    context={'chat': chat}
+    return redirect('board:bbs_main',context)
 
 
 

@@ -33,36 +33,14 @@
                   <li>
                     <h4>접속 중 회원</h4>
                   </li>
+                  {% for post in chat %}
                   <li>
                     <a href="#">
-                        <img src="/static/img/friends/fr-10.jpg" class="img-circle" width="20">김선생
+                        <img src="/static/img/friends/fr-10.jpg" class="img-circle" width="20">{{post.username}}
 
                       </a>
                   </li>
-                  <li>
-                    <a href="#">
-                        <img src="/static/img/friends/fr-05.jpg" class="img-circle" width="20">동학개미
-
-                      </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                        <img src="/static/img/friends/fr-01.jpg" class="img-circle" width="20">떡상가즈아
-
-                      </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                        <img src="/static/img/friends/fr-03.jpg" class="img-circle" width="20">내일의버핏
-
-                      </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                        <img src="/static/img/friends/fr-02.jpg" class="img-circle" width="20">존버가답
-
-                      </a>
-                  </li>
+                    {% endfor %}
                 </ul>
 
                 <div class="inbox-body text-center inbox-action">

@@ -33,3 +33,7 @@ class stockhistory(models.Model):
 
     def __str__(self):
         return self.history_name
+
+class Chat(models.Model):
+    chat_text=models.ForeignKey(User,on_delete=models.CASCADE)
+    username=models.CharField(max_length=30)
