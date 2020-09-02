@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import User, stockname, stockhistory
+from .models import User, stockname, stockhistory, Chat
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password, check_password
 import xml.etree.ElementTree as ET
@@ -8,7 +8,7 @@ from urllib.parse import quote
 import pandas as pd
 import re
 from bs4 import BeautifulSoup
-from stock.forms import stocknameForm , stockhistoryForm
+from stock.forms import stocknameForm , stockhistoryForm, ChatFrom
 # import time, win32con, win32api, win32gui
 
 
@@ -20,18 +20,22 @@ def s_login(request):
     elif request.method == "POST":
         login_username = request.POST.get('login_username', None)
         login_password = request.POST.get('login_password', None)
-        print(login_username)
-        print(login_password)
+
 
         if not (login_username and login_password):
             response_data['error'] = "아이디와 비밀번호를 모두 입력해주세요 ."
         else:
             myuser = User.objects.get(username=login_username)
-            print(myuser)
 
             if (login_password == myuser.password):
                 request.session['userss'] = login_username
                 request.session['user_id'] = myuser.id
+                chatname=ChatFrom()
+                chat = chatname.save(commit=False)
+                chat.username = myuser.username
+                chat.chat_text=myuser
+                chat.save()
+                request.session['chat_id'] = chat.id
                 context = {'userss': login_username}
                 context['user_id'] = myuser.id
                 return render(request, 'detail.html', context)  # 나중에 홈피로 연결시켜야함
@@ -594,11 +598,12 @@ def detailpost(request,code_num):
 
 # 로그아웃
 def s_logout(request):
-
-    request.session["username"] = "";
-    request.session.clear();
-    request.session.abandon();
-    return redirect('stock:detail')
+    chats=request.session['chat_id']
+    chat=get_object_or_404(Chat, pk=chats)
+    chat.delete()
+    request.session["username"] = ""
+    request.session.clear()
+    return render(request,'index.html')
 
 # 게시판
 def s_bbs(request):
