@@ -110,11 +110,14 @@
                     {{ post.contents }}
 
 
-                    <a href="{% url 'board:bbs_update' post.id %}">수정</a>
-                    <a href="{% url 'board:bbs_delete' post.id %}">삭제</a>
 
 
                 </div>
+                  <div class="mail-sender">
+                      <a href="{% url 'board:bbs_update' post.id %}" class="btn btn-sm btn-theme">수정</a>
+                      <a href="{% url 'board:bbs_delete' post.id %}" class="btn btn-sm btn-danger pull-right">삭제</a>
+
+                  </div>
 
 
                 <div class="attachment-mail">
@@ -122,8 +125,9 @@
                     {% csrf_token %}
                     {% bootstrap_form comment_form %}
 
-                    <input type="submit" class="btn btn-theme" value="댓글작성">
+                    <input type="submit" class="btn btn-sm btn-theme" value="댓글작성">
                     </form>
+                <br>
                   <ul>
                     <table class="table table-hover">
                       <thead class="thead-dark">
