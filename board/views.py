@@ -185,15 +185,20 @@ def board_main_list(request):
 
 
 
+
 def board_create(request):
     print('board_create')
+
     user_name = request.session['userss']
     user_id = request.session['user_id']
+
     companyNamedict = GetStockCode.Get_CSV_Maching_dict()
     companyName = request.POST.get('machingstock')
     print(companyName)
     xmlDict = GetStockCode.Get_XML_maching_dict()
     match_code = ''
+
+
     if companyName is not None:
         match_code = xmlDict[companyName]
         print(match_code)
@@ -201,6 +206,8 @@ def board_create(request):
 
     if request.method == 'POST':
         post_form = PostForm(request.POST)
+
+
         print('포스트로 들오온')
         print(post_form.errors)
 
@@ -212,6 +219,7 @@ def board_create(request):
                 post = post_form.save(commit=False)
                 post.maching_code = match_code
                 post.stock_name = companyName
+                post.author = user_name
                 post.save()
             #post_form.save()
             return redirect('board:bbs_main')
@@ -281,10 +289,14 @@ def board_detail(request, post_id):
 
 def board_send_comment(request, post_id):
 
+        user_name = request.session['userss']
+        user_id = request.session['user_id']
         print("Comment 들어왔다")
         post = get_object_or_404(Post, pk=post_id)
         comment = Comment(comment=post)
-        # comment_list = Comment.objects.all().order_by("comment_id")
+        # comment = Comment(pk=post_id)
+
+        comment_list = Comment.objects.filter(comment=post_id).order_by('-created_date')
         # print(comment_list)
         post_form = PostForm(request.POST, instance=post)
 
@@ -294,35 +306,38 @@ def board_send_comment(request, post_id):
             form = CommentForm(request.POST, instance=comment)
 
             if form.is_valid():
+                comment = form.save(commit=False)
+                comment.post = post
+                comment.author = user_name
                 comment.save()
                 page = request.GET.get('page', '1')
-                paginator = Paginator(comment_list, 10)
+                paginator = Paginator(comment_list, 5)
                 print("page")
-                print(page)
                 commentpage = paginator.get_page(page)
-                context = {'comment_list': comment_list,'post_form': post_form, 'post': post, 'comment_form': form, 'commentpage': commentpage}
+                context = {'comment_list': comment_list,'post_form': post_form, 'post': post, 'comment_form': form, 'page': page, 'commentpage': commentpage, 'userss': user_name, 'user_id': user_id}
 
                 return render(request, 'bbs_detail.html',context)
 
-                # return redirect("/stock/bbs/" + str(post_id) + '/detail')
+
         else:
             form = CommentForm(request.GET)
             page = request.GET.get('page','1')
-            paginator = Paginator(comment_list, 10)
+            paginator = Paginator(comment_list, 5)
             commentpage = paginator.get_page(page)
 
-            context = {'comment_list': comment_list,'post_form': post_form, 'post': post, 'comment_form': form, 'commentpage': commentpage}
+            context = {'comment_list': comment_list,'post_form': post_form, 'post': post, 'comment_form': form, 'page': page, 'commentpage': commentpage, 'userss': user_name, 'user_id': user_id}
 
 
             if form.is_valid():
                 comment = form.save(commit=False)
                 comment.post = post
+                comment.author = user_name
                 comment.save()
                 page = request.GET.get('page', '1')
-                paginator = Paginator(comment, 10)
+                paginator = Paginator(comment_list, 5)
                 commentpage = paginator.get_page(page)
 
-                context = {'comment_list': comment_list,'post_form': post_form, 'post': post, 'comment_form': form, 'commentpage': commentpage}
+                context = {'comment_list': comment_list,'post_form': post_form, 'post': post, 'comment_form': form, 'page': page, 'commentpage': commentpage, 'userss': user_name, 'user_id': user_id}
 
                 return render(request, 'bbs_detail.html', context)
 
